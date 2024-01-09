@@ -18,18 +18,23 @@ public class mechanumTest extends LinearOpMode {
     private DcMotorEx backLeft;
     private DcMotorEx screwLeft;
     private DcMotorEx screwRight;
+    private Servo clawLeft;
+
+    private Servo clawRight;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        screwLeft = hardwareMap.get(DcMotor.class, "screwLeft");
-        screwRight = hardwareMap.get(DcMotor.class, "screwRight");
+        frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
+        screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
+        screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
+        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
+        clawRight = hardwareMap.get(Servo.class,"clawRight");
 
         // Put initialization blocks here.
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -50,13 +55,18 @@ public class mechanumTest extends LinearOpMode {
         screwRight.setDirection(DcMotor.Direction.FORWARD);
         screwLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
             while (opModeIsActive()) {
                 // Put loop blocks here.
-                mecanum();
+                mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
                 Lift();
+                claw();
+                telemetry.addData("Left", clawLeft.getPosition());
+                telemetry.addData("Right", clawRight.getPosition());
                 telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
                 telemetry.addData("Right Stick X", gamepad1.right_stick_x);
                 telemetry.update();
@@ -67,6 +77,8 @@ public class mechanumTest extends LinearOpMode {
     /**
      * Describe this function...
      */
+    private void claw(){
+    }
     private void Lift() {
         if (gamepad2.dpad_down) {
             screwLeft.setPower(1);
@@ -83,30 +95,8 @@ public class mechanumTest extends LinearOpMode {
     /**
      * Describe this function...
      */
-    private void mecanum(double LSY, double LSX, double RSX) {
-        /*
-        int Speed = 1600;
-    if (LSX != 0 || LSY != 0 || RSX != 0) {
-      ((DcMotorEx) frontRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)-Math.pow(LSX,3),-1,1)-Math.pow(RSX,3))); //turn has to be last, LSX and LSY has to be min/maxed together.
-      ((DcMotorEx) backRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)+ Math.pow(LSX,3),-1,1)-Math.pow(RSX,3)));
-      ((DcMotorEx) frontLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)+Math.pow(LSX,3),1),-1)+ Math.pow(RSX,3)));
-      ((DcMotorEx) backLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)-Math.pow(LSX,3),1),-1)+Math.pow(RSX,3)));
-    } else {
-      ((DcMotorEx) frontLeft).setVelocity(0);
-      ((DcMotorEx) frontRight).setVelocity(0);
-      ((DcMotorEx) backLeft).setVelocity(0);
-      ((DcMotorEx) backRight).setVelocity(0);
-      frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-      backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-      frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-      backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-
-      RSX: + if direction:reverse, - if direction:forward
-      LSX:
-
-    }
-         */
+    private void mecanum(double LSY, double LSX, double RSX){
+        //RSX: + if forward, - if reverse: Set direction based 
         int Speed = 1600;
         double lx = Math.pow(LSY,3);
         double ly = Math.pow(LSY,3);
