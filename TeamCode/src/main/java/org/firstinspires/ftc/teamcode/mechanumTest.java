@@ -28,13 +28,13 @@ public class mechanumTest extends LinearOpMode {
     private DcMotorEx screwLeft;
     private DcMotorEx screwRight;
 
-    private DcMotorEx arm;
-
-    private Servo vertical;
-
     private Servo clawLeft;
 
     private Servo clawRight;
+
+    private DcMotorEx arm;
+
+    private Servo vertical;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
@@ -48,6 +48,14 @@ public class mechanumTest extends LinearOpMode {
         screwLeft = hardwareMap.get(DcMotorEx.class, "screwLeft");
         screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
         arm  = hardwareMap.get(DcMotorEx.class, "arm");
+        frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
+        screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
+        screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
+        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
+        clawRight = hardwareMap.get(Servo.class,"clawRight");
 
         // Put initialization blocks here.
         wheelsInit();
@@ -104,61 +112,6 @@ public class mechanumTest extends LinearOpMode {
         else if(gamepad2.left_stick_y<0){
             arm.setPower(-1);
         }
-        else{
-            arm.setPower(0);
-        }
-    }
-    private void claw(boolean open, boolean close, double inputX, double inputY){
-
-        private int lmin = 0; //left limit of servo
-        private int lmax = 180; //right limit of servo
-
-        private int rmin = 0; //left limit of servo
-        private int rmax = 180; //right limit of servo
-
-        clawLeft.scaleRange(lmin,lmax);
-        clawRight.scaleRange(rmin,rmax);
-        //we may want to do range.clip instead? HOWEVER that would be set power as well as EVERY .setposition
-        //  armServo.setPosition(Range.clip(armPosition, MIN_POSITION, MAX_POSITION));
-
-        if(open){
-          clawLeft.setPosition(0);
-          clawRight.setPosition(1);
-        }
-        if(close){
-            clawLeft.setPosition(1);
-            clawRight.setPosition(0);
-        }
-
-        private double manualSpeed = .1;
-        //manual open and close of claw
-        if(inputX<0){
-            //to the right is closing
-            clawLeft.setPosition(clawLeft.getPosition()+manualSpeed);
-            clawRight.setPosition(clawRight.getPosition()-manualSpeed);
-        }
-        else if(inputX>0){
-            //to the left is opening
-            clawLeft.setPosition(clawLeft.getPosition()-manualSpeed);
-            clawRight.setPosition(clawRight.getPosition()+manualSpeed);
-        }
-        else{
-            clawLeft.setPosition(clawLeft.getPosition());
-            clawRight.setPosition(clawRight.getPosition());
-        }
-
-        private double verticalSpeed = 1;
-        //vertical movement of claw
-        if(inputY>0){
-            vertical.setPosition(vertical.getPosition()+verticalSpeed);
-        }
-        else if(inputY<0){
-            vertical.setPosition(vertical.getPosition()-verticalSpeed);
-        }
-        else{
-            vertical.setPosition(vertical.getPosition());
-        }
-
     }
     private void Lift() {
         if (gamepad2.dpad_down) {
@@ -172,11 +125,8 @@ public class mechanumTest extends LinearOpMode {
             screwRight.setPower(0);
         }
     }
-
-    /**
-     * Describe this function...
-     */
-    private void mecanum(double LSY, double LSX, double RSX) {
+    private void mecanum(double LSY, double LSX, double RSX){
+        //RSX: + if forward, - if reverse: Set direction based
         int Speed = 1600;
         double lx = Math.pow(LSY,3);
         double ly = Math.pow(LSY,3);
@@ -194,4 +144,52 @@ public class mechanumTest extends LinearOpMode {
             backRight.setVelocity(0);
         }
     }
+//    private void claw(boolean open, boolean close, double inputX, double inputY) {
+//
+//        private int lmin = 0; //left limit of servo
+//        private int lmax = 180; //right limit of servo
+//
+//        private int rmin = 0; //left limit of servo
+//        private int rmax = 180; //right limit of servo
+//
+//        clawLeft.scaleRange(lmin, lmax);
+//        clawRight.scaleRange(rmin, rmax);
+//        //we may want to do range.clip instead? HOWEVER that would be set power as well as EVERY .setposition
+//        //  armServo.setPosition(Range.clip(armPosition, MIN_POSITION, MAX_POSITION));
+//
+//        if (open) {
+//            clawLeft.setPosition(0);
+//            clawRight.setPosition(1);
+//        }
+//        if (close) {
+//            clawLeft.setPosition(1);
+//            clawRight.setPosition(0);
+//        }
+//
+//        private double manualSpeed = .1;
+//        //manual open and close of claw
+//        if (inputX < 0) {
+//            //to the right is closing
+//            clawLeft.setPosition(clawLeft.getPosition() + manualSpeed);
+//            clawRight.setPosition(clawRight.getPosition() - manualSpeed);
+//        } else if (inputX > 0) {
+//            //to the left is opening
+//            clawLeft.setPosition(clawLeft.getPosition() - manualSpeed);
+//            clawRight.setPosition(clawRight.getPosition() + manualSpeed);
+//        } else {
+//            clawLeft.setPosition(clawLeft.getPosition());
+//            clawRight.setPosition(clawRight.getPosition());
+//        }
+//
+//        private double verticalSpeed = 1;
+//        //vertical movement of claw
+//        if (inputY > 0) {
+//            vertical.setPosition(vertical.getPosition() + verticalSpeed);
+//        } else if (inputY < 0) {
+//            vertical.setPosition(vertical.getPosition() - verticalSpeed);
+//        } else {
+//            vertical.setPosition(vertical.getPosition());
+//        }
+//    }cc
+    //claw code ^
 }
