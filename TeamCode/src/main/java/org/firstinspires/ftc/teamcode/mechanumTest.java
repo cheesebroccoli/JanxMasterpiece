@@ -41,7 +41,6 @@ public class mechanumTest extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-<<<<<<< Updated upstream
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -92,32 +91,30 @@ public class mechanumTest extends LinearOpMode {
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
     private void armInit(){
-=======
-        TemplateJanx janx = new TemplateJanx();
-        janx.init("frontRight","backRight","backLeft","frontLeft",hardwareMap);
-//       frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
-//        backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
-//        frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
-//        backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
-//        screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
-//        screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
-//        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
-//        clawRight = hardwareMap.get(Servo.class,"clawRight");
-//
-//        // Put initialization blocks here.
-//        frontRight.setDirection(DcMotor.Direction.FORWARD);
-//        backRight.setDirection(DcMotor.Direction.FORWARD);
-//        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-//        backLeft.setDirection(DcMotor.Direction.REVERSE);
-//        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
->>>>>>> Stashed changes
+//        TemplateJanx janx = new TemplateJanx();
+//        janx.init("frontRight","backRight","backLeft","frontLeft",hardwareMap);
+       frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
+        screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
+        screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
+        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
+        clawRight = hardwareMap.get(Servo.class,"clawRight");
+
+        // Put initialization blocks here.
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         screwLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         screwRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         screwLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -217,6 +214,6 @@ public class mechanumTest extends LinearOpMode {
 //        } else {
 //            vertical.setPosition(vertical.getPosition());
 //        }
-//    }cc
+//    }
     //claw code ^
 }
