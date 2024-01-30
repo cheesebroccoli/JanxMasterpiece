@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import static com.qualcomm.robotcore.util.Range.clip;
 import static com.qualcomm.robotcore.util.Range.scale;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  */
 @TeleOp(name = "MechanumTest")
-public class mechanumTest extends LinearOpMode {
+public class mechanumTest extends OpMode {
 
     private DcMotorEx frontRight;
     private DcMotorEx backRight;
@@ -39,44 +39,37 @@ public class mechanumTest extends LinearOpMode {
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
-    @Override
-    public void runOpMode() {
-        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
-        backRight = hardwareMap.get(DcMotorEx.class, "backRight");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
-        screwLeft = hardwareMap.get(DcMotorEx.class, "screwLeft");
-        screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
-        arm  = hardwareMap.get(DcMotorEx.class, "arm");
-        frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
-        backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
-        frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
-        backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
-        screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
-        screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
-        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
-        clawRight = hardwareMap.get(Servo.class,"clawRight");
 
-        // Put initialization blocks here.
-        wheelsInit();
-        armInit();
-        waitForStart();
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
-                // Put loop blocks here.
-                mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-                Lift();
-                arm();
-                telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-                telemetry.addData("Right Stick X", gamepad1.right_stick_x);
-                telemetry.update();
-            }
-        }
-    }
+@Override
+public void init(){
+    frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+    backRight = hardwareMap.get(DcMotorEx.class, "backRight");
+    frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+    backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+    screwLeft = hardwareMap.get(DcMotorEx.class, "screwLeft");
+    screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
+    arm  = hardwareMap.get(DcMotorEx.class, "arm");
+    frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
+    backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
+    frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
+    backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
+    screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
+    screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
+    clawLeft = hardwareMap.get(Servo.class,"clawLeft");
+    clawRight = hardwareMap.get(Servo.class,"clawRight");
+    wheelsInit();
+    armInit();
+}
+@Override
+public void loop(){
+    mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+    Lift();
+    arm();
+    telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
+    telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+    telemetry.update();
+}
 
-    /**
-     * Describe this function...
-     */
     private void wheelsInit(){
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
