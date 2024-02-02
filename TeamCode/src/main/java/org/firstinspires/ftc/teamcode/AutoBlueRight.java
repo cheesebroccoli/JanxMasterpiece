@@ -31,7 +31,7 @@
 //    }
 //    private void backward(double time){
 //        /**
-//         * motors.setpower(-1);
+//         * robot.frontRight.setpower(-1);
 //         * time.delay(time)
 //         * motors.setpower(0);
 //         */
