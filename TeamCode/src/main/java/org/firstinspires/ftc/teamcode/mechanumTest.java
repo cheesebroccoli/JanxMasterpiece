@@ -42,22 +42,24 @@ public class mechanumTest extends OpMode {
 
 @Override
 public void init(){
-    frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
-    backRight = hardwareMap.get(DcMotorEx.class, "backRight");
-    frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
-    backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
-    screwLeft = hardwareMap.get(DcMotorEx.class, "screwLeft");
-    screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
-    arm  = hardwareMap.get(DcMotorEx.class, "arm");
-    frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
-    backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
-    frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
-    backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
-    screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
-    screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
-    clawLeft = hardwareMap.get(Servo.class,"clawLeft");
-    clawRight = hardwareMap.get(Servo.class,"clawRight");
-    wheelsInit();
+    TemplateJanx robot = new TemplateJanx();
+    robot.init("frontRight","backRight","backLeft","frontLeft",hardwareMap);
+//    frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+//    backRight = hardwareMap.get(DcMotorEx.class, "backRight");
+//    frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+//    backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+//    screwLeft = hardwareMap.get(DcMotorEx.class, "screwLeft");
+//    screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
+//    arm  = hardwareMap.get(DcMotorEx.class, "arm");
+//    frontRight =  hardwareMap.get(DcMotorEx.class, "frontRight");
+//    backRight =   hardwareMap.get(DcMotorEx.class, "backRight");
+//    frontLeft =   hardwareMap.get(DcMotorEx.class, "frontLeft");
+//    backLeft =    hardwareMap.get(DcMotorEx.class, "backLeft");
+//    screwLeft =   hardwareMap.get(DcMotorEx.class, "screwLeft");
+//    screwRight =  hardwareMap.get(DcMotorEx.class, "screwRight");
+//    clawLeft = hardwareMap.get(Servo.class,"clawLeft");
+//    clawRight = hardwareMap.get(Servo.class,"clawRight");
+//    wheelsInit();
     armInit();
 }
 @Override
@@ -149,11 +151,15 @@ public void loop(){
         double ly = Math.pow(LSY,3);
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
-            frontRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
-            backRight.setVelocity(Speed*(clip(ly-lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip(ly-lx,-1,1)-rx));
-            backLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
+            frontRight.setVelocity(Speed*((ly+lx)+rx));
+            backRight.setVelocity(Speed*((ly-lx)+rx));
+            frontLeft.setVelocity(Speed*((ly-lx)-rx));
+            backLeft.setVelocity(Speed*((ly+lx)-rx));
         }
+//            frontRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
+//            backRight.setVelocity(Speed*(clip(ly-lx,-1,1)+rx));
+//            frontLeft.setVelocity(Speed*(clip(ly-lx,-1,1)-rx));
+//            backLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
         else{
             frontLeft.setVelocity(0);
             backLeft.setVelocity(0);
