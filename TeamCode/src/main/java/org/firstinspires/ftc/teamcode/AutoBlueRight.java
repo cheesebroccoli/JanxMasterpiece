@@ -1,60 +1,73 @@
-//package org.firstinspires.ftc.teamcode;
-//import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-//import com.qualcomm.robotcore.hardware.DcMotorEx;
-//import com.qualcomm.robotcore.util.Range;
-//
-//@Autonomous
-//public class AutoBlueRight {
-//
-//    private DcMotorEx frontRight;
-//    private DcMotorEx backRight;
-//    private DcMotorEx frontLeft;
-//    private DcMotorEx backLeft;
-//
-//    private void forward(int time){
-//
-//    }
-//
-//
-//    public void init(){
-//        TemplateJanx robot = new TemplateJanx();
-//        //how to import hardwareMap???
-//        robot.init("frontRight","backRight","backLeft","frontLeft",hardwareMap);
-//    }
-//    public void forward(double time){
-//        /**
-//         * motors.setpower(1);
-//         * time.delay(time)
-//         * motors.setpower(0);
-//         */
-//    }
-//    private void backward(double time){
-//        /**
-//         * robot.frontRight.setpower(-1);
-//         * time.delay(time)
-//         * motors.setpower(0);
-//         */
-//    }
-//    private void left(double time){
-//        /**
-//         * ??
-//         * time.delay(time)
-//         * motors.setpower(0);
-//         */
-//
-//    }
-//    private void right(double time){
-//
-//    }
-//    private void rightturn(double degree){
-//
-//
-//    }
-//    private void leftturn(double degree){
-//
-//    }
-//}
-////PushbotAutoDriveByEncoder_Linear.java
-//
-//
+package org.firstinspires.ftc.teamcode;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
+import static java.lang.Thread.sleep;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+@Autonomous
+public class AutoBlueRight extends LinearOpMode {
+    TemplateJanx robot = new TemplateJanx();
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+    }
+
+    private void forward(long time){
+        robot.turnOn(1);
+        sleep(time);
+        robot.turnOff();
+    }
+
+    private void backward(long time){
+        robot.turnOn(-1);
+        sleep(time);
+        robot.turnOff();
+    }
+    private void Strife(String direction, long time){
+        if(direction.equals("LEFT")) {
+            robot.fr.setPower(1);
+            robot.br.setPower(-1);
+            robot.bl.setPower(1);
+            robot.fl.setPower(-1);
+        }
+        else if(direction.equals("RIGHT")){
+            robot.fr.setPower(-1);
+            robot.br.setPower(1);
+            robot.bl.setPower(1);
+            robot.fl.setPower(-1);
+        }
+        sleep(time);
+        robot.turnOff();
+
+    }
+    private void turn(double seconds){
+
+
+    }
+
+    private void arm(){
+
+    }
+    private void claw(String pos){
+        if(pos.equals("CLOSE")){
+
+        }
+        else if(pos.equals("OPEN")){
+
+        }
+        else{
+
+        }
+    }
+
+
+}
+//PushbotAutoDriveByEncoder_Linear.java
+
+

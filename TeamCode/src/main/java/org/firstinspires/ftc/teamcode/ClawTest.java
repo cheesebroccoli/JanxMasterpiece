@@ -15,7 +15,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class ClawTest extends LinearOpMode {
     private Servo clawLeft;
     private Servo clawRight;
-
     private Servo nodder;
     double power = .1;
     /**
@@ -37,7 +36,6 @@ public class ClawTest extends LinearOpMode {
                 arm();
                 telemetry.addData("Left",clawLeft.getPosition());
                 telemetry.addData("Right",clawRight.getPosition());
-                telemetry.addData("stick:",gamepad2.left_stick_x);
                 telemetry.update();
             }
         }
