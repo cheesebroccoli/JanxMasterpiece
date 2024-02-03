@@ -79,4 +79,5 @@ public class TemplateJanx {
         bl.setPower(0);
         fl.setPower(0);
     }
+
 }
