@@ -24,11 +24,18 @@ public class TemplateJanx {
 
     //clockwise from front right
     //doubles as an initialisation
-    public TemplateJanx(){
+    public TemplateJanx(HardwareMap h){
+        hwMap = h;
     }
-    public void init(String frontRight, String backRight, String backleft, String frontLeft,String leftClaw, String rightClaw, String nodder, String armextend, String armTurn,  HardwareMap ahwMap) {
+    public void motorInit(String motor){
+        hwMap.get(DcMotorEx.class, motor);
+        motor.setDirection(DcMotor.Direction.FORWARD);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motor.setPower(0);
+    }
+    public void wheelInit(String frontRight, String backRight, String backleft, String frontLeft,String leftClaw, String rightClaw, String nodder, String armextend, String armTurn) {
         //when you make this in teleop or autonomous, you can import hardware.DcMotor with the keyword hardwareMap
-        hwMap = ahwMap;
         fr  = hwMap.get(DcMotorEx.class, frontRight);
         br  = hwMap.get(DcMotorEx.class, backRight);
         fl  = hwMap.get(DcMotorEx.class, frontLeft);

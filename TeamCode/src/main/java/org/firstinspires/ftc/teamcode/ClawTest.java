@@ -9,55 +9,59 @@ public class ClawTest extends LinearOpMode {
     private Servo clawLeft;
     private Servo clawRight;
     private Servo nodder;
-    double power = .1;
+    double power = .005;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
-        TemplateJanx janx = new TemplateJanx();
-        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations",hardwareMap);
-        clawLeft = hardwareMap.get(Servo.class,"clawLeft");
-        clawRight = hardwareMap.get(Servo.class,"clawRight");
-        nodder = hardwareMap.get(Servo.class,"vertical");
+        TemplateJanx janx = new TemplateJanx(hardwareMap);
+        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations");
+          clawLeft = janx.lc;
+          clawRight = janx.rc;
+          nodder = janx.nod;
+//        clawRight = hardwareMap.get(Servo.class,"clawRight");
+//        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();
         if (opModeIsActive()) {
+            clawLeft.setPosition(1);
+            clawRight.setPosition(0);
             // Put run blocks here.
             //initialisations here
             while (opModeIsActive()) {
-                claw();
+                claw(gamepad2.left_stick_x);
                 arm();
-                telemetry.addData("Left",clawLeft.getPosition());
-                telemetry.addData("Right",clawRight.getPosition());
+                telemetry.addData("ResultLeft",clawLeft.getPosition());
+                telemetry.addData("ResultRight",clawRight.getPosition());
                 telemetry.update();
             }
         }
     }
-    private void claw(){
-        //the claw nodder
-        if(gamepad2.left_stick_y>0){
-            nodder.setPosition(nodder.getPosition()+power);
-        }
-        else if(gamepad2.left_stick_y<0){
-            nodder.setPosition(nodder.getPosition()-power);
-        }
+    private void claw(double input){
+//        //the claw nodder
+//        if(gamepad2.left_stick_y>0){
+//            nodder.setPosition(nodder.getPosition()+power);
+//        }
+//        else if(gamepad2.left_stick_y<0){
+//            nodder.setPosition(nodder.getPosition()-power);
+//        }
         //opens and closes claw
-        if(gamepad2.left_stick_x!=0){
-            if(gamepad2.left_stick_x>0){
+        telemetry.addData("input: ",input);
+            if(input>0){
                 //Left:open
-              clawLeft.setPosition(clawLeft.getPosition()+power);
-              clawRight.setPosition(clawLeft.getPosition()-power);
+              clawLeft.setPosition(clawLeft.getPosition()-power);
+              clawRight.setPosition(clawRight.getPosition()+power);
             }
-            else if(gamepad2.left_stick_x<0){
+            else if(input<0){
                 //right:close
-                clawLeft.setPosition(clawLeft.getPosition()-power);
-                clawRight.setPosition(clawLeft.getPosition()+power);
+                clawLeft.setPosition(clawLeft.getPosition()+power);
+                clawRight.setPosition(clawRight.getPosition()-power);
             }
-        }
         else {
             //setpositions.
             if (gamepad2.y) {
                 // move to 0 degrees.
+                //fully closed
                 clawLeft.setPosition(0);
                 clawRight.setPosition(1);
             } else if (gamepad2.x || gamepad2.b) {
@@ -66,6 +70,7 @@ public class ClawTest extends LinearOpMode {
                 clawRight.setPosition(0.5);
             } else if (gamepad2.a) {
                 // move to 180 degrees.
+                //fully open
                 clawLeft.setPosition(1);
                 clawRight.setPosition(0);
             }

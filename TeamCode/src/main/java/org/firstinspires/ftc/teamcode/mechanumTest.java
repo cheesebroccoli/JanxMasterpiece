@@ -24,8 +24,12 @@ public class mechanumTest extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-        TemplateJanx janx = new TemplateJanx();
-        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations",hardwareMap);
+        TemplateJanx janx = new TemplateJanx(hardwareMap);
+        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations");
+        frontLeft =  janx.fl;
+        frontRight = janx.fr;
+        backRight =  janx.br;
+        backLeft =   janx.bl;
 //        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 //        backRight =  hardwareMap.get(DcMotorEx.class, "backRight");
 //        frontLeft =  hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -58,7 +62,6 @@ public class mechanumTest extends LinearOpMode {
             while (opModeIsActive()) {
                 // Put loop blocks here.
                 mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-                Lift();
                 telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
                 telemetry.addData("Right Stick X", gamepad1.right_stick_x);
                 telemetry.update();
@@ -107,17 +110,20 @@ public class mechanumTest extends LinearOpMode {
       RSX: + if direction:reverse, - if direction:forward
       LSX:
 
-    }
+   }
+   //front left and back right
          */
         int Speed = 1600;
         double lx = Math.pow(LSY,3);
         double ly = Math.pow(LSY,3);
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
-            frontRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
-            backRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
-            backLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
+            frontRight.setVelocity(Speed*(clip((-ly)-lx,-1,1)+rx));
+            //backRight.setVelocity(Speed*(clip((-ly)+lx,-1,1)+rx));
+            //frontLeft.setVelocity(Speed*(clip((-ly)+lx,-1,1)-rx));
+            backLeft.setVelocity(Speed*(clip((-ly)-lx,-1,1)-rx));
+            frontLeft.setPower(1);
+            backRight.setPower(1);
         }
         else{
             frontLeft.setVelocity(0);
@@ -125,5 +131,9 @@ public class mechanumTest extends LinearOpMode {
             frontRight.setVelocity(0);
             backRight.setVelocity(0);
         }
+        telemetry.addData("flVelocity",frontLeft.getVelocity());
+        telemetry.addData("frVelocity",frontRight.getVelocity());
+        telemetry.addData("brVelocity",backRight.getVelocity());
+        telemetry.addData("blVelocity",backLeft.getVelocity());
     }
 }

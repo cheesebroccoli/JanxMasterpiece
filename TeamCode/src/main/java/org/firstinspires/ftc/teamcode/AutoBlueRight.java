@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Autonomous
 public class AutoBlueRight extends LinearOpMode {
-    TemplateJanx robot = new TemplateJanx();
+//    TemplateJanx robot = new TemplateJanx(HardwareMap);
     @Override
     public void runOpMode() throws InterruptedException {
 
