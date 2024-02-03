@@ -24,12 +24,12 @@ public class mechanumTest extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        screwLeft = hardwareMap.get(DcMotor.class, "screwLeft");
-        screwRight = hardwareMap.get(DcMotor.class, "screwRight");
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight =  hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft =  hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft =   hardwareMap.get(DcMotorEx.class, "backLeft");
+        screwLeft =  hardwareMap.get(DcMotorEx.class, "screwLeft");
+        screwRight = hardwareMap.get(DcMotorEx.class, "screwRight");
 
         // Put initialization blocks here.
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -55,7 +55,7 @@ public class mechanumTest extends LinearOpMode {
             // Put run blocks here.
             while (opModeIsActive()) {
                 // Put loop blocks here.
-                mecanum();
+                mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
                 Lift();
                 telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
                 telemetry.addData("Right Stick X", gamepad1.right_stick_x);
