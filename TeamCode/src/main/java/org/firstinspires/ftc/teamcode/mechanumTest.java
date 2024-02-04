@@ -93,13 +93,13 @@ public class mechanumTest extends LinearOpMode {
          */
         int Speed = 1600;
         double lx = Math.pow(LSY,3);
-        double ly = Math.pow(LSY,3);
+        double ly = -(Math.pow(LSY,3));
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
-            frontRight.setVelocity(Speed*(clip((-ly)-lx,-1,1)+rx));
-            backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
-            backLeft.setVelocity(Speed*(clip((-ly)-lx,-1,1)-rx));
+            frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
+            frontLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
+            backRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
+            backLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
 //            frontLeft.setPower(1);
 //            backRight.setPower(1);
         }
