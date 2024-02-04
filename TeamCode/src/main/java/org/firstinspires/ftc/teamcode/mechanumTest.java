@@ -24,14 +24,17 @@ public class mechanumTest extends LinearOpMode {
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
+
     @Override
     public void runOpMode() {
+        //
         TemplateJanx janx = new TemplateJanx(hardwareMap);
         janx.wheelInit("frontRight","backRight","backLeft","frontLeft");
         frontLeft =  janx.fl;
         frontRight = janx.fr;
         backRight =  janx.br;
         backLeft =   janx.bl;
+
 
         janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
         leftClaw  = janx.lc;
@@ -60,12 +63,7 @@ public class mechanumTest extends LinearOpMode {
 //        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 //        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 //        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-//        screwLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        screwRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        screwLeft.setDirection(DcMotor.Direction.FORWARD);
-//        screwRight.setDirection(DcMotor.Direction.FORWARD);
-//        screwLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
@@ -100,28 +98,11 @@ public class mechanumTest extends LinearOpMode {
      */
     private void mecanum(double LSY, double LSX, double RSX) {
         /*
-        int Speed = 1600;
-    if (LSX != 0 || LSY != 0 || RSX != 0) {
-      ((DcMotorEx) frontRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)-Math.pow(LSX,3),-1,1)-Math.pow(RSX,3))); //turn has to be last, LSX and LSY has to be min/maxed together.
-      ((DcMotorEx) backRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)+ Math.pow(LSX,3),-1,1)-Math.pow(RSX,3)));
-      ((DcMotorEx) frontLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)+Math.pow(LSX,3),1),-1)+ Math.pow(RSX,3)));
-      ((DcMotorEx) backLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)-Math.pow(LSX,3),1),-1)+Math.pow(RSX,3)));
-    } else {
-      ((DcMotorEx) frontLeft).setVelocity(0);
-      ((DcMotorEx) frontRight).setVelocity(0);
-      ((DcMotorEx) backLeft).setVelocity(0);
-      ((DcMotorEx) backRight).setVelocity(0);
-      frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-      backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-      frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-      backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-
-      RSX: + if direction:reverse, - if direction:forward
-      LSX:
-
-   }
    //front left and back right
+         */
+        /**
+         * front left and back right slow
          */
         int Speed = 1600;
         double lx = Math.pow(LSY,3);
@@ -129,11 +110,11 @@ public class mechanumTest extends LinearOpMode {
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
             frontRight.setVelocity(Speed*(clip((-ly)-lx,-1,1)+rx));
-            //backRight.setVelocity(Speed*(clip((-ly)+lx,-1,1)+rx));
-            //frontLeft.setVelocity(Speed*(clip((-ly)+lx,-1,1)-rx));
+            backRight.setVelocity(Speed*(clip((-ly)+lx,-1,1)+rx));
+            frontLeft.setVelocity(Speed*(clip((-ly)+lx,-1,1)-rx));
             backLeft.setVelocity(Speed*(clip((-ly)-lx,-1,1)-rx));
-            frontLeft.setPower(1);
-            backRight.setPower(1);
+//            frontLeft.setPower(1);
+//            backRight.setPower(1);
         }
         else{
             frontLeft.setVelocity(0);
@@ -147,3 +128,27 @@ public class mechanumTest extends LinearOpMode {
         telemetry.addData("blVelocity",backLeft.getVelocity());
     }
 }
+
+/**
+ *   int Speed = 1600;
+ *     if (LSX != 0 || LSY != 0 || RSX != 0) {
+ *       ((DcMotorEx) frontRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)-Math.pow(LSX,3),-1,1)-Math.pow(RSX,3))); //turn has to be last, LSX and LSY has to be min/maxed together.
+ *       ((DcMotorEx) backRight).setVelocity(Speed*(clip(Math.pow(-LSY,3)+ Math.pow(LSX,3),-1,1)-Math.pow(RSX,3)));
+ *       ((DcMotorEx) frontLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)+Math.pow(LSX,3),1),-1)+ Math.pow(RSX,3)));
+ *       ((DcMotorEx) backLeft).setVelocity(Speed*(Math.min(Math.max(Math.pow(-LSY,3)-Math.pow(LSX,3),1),-1)+Math.pow(RSX,3)));
+ *     } else {
+ *       ((DcMotorEx) frontLeft).setVelocity(0);
+ *       ((DcMotorEx) frontRight).setVelocity(0);
+ *       ((DcMotorEx) backLeft).setVelocity(0);
+ *       ((DcMotorEx) backRight).setVelocity(0);
+ *       frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+ *       backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+ *
+ *       frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+ *       backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+ *
+ *       RSX: + if direction:reverse, - if direction:forward
+ *       LSX:
+ *
+ *    }
+ */
