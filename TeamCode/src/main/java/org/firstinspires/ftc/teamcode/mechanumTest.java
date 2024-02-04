@@ -23,7 +23,6 @@ public class mechanumTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        //
         TemplateJanx janx = new TemplateJanx(hardwareMap);
         janx.wheelInit("frontRight","backRight","backLeft","frontLeft");
         frontLeft =  janx.fl;
@@ -98,8 +97,8 @@ public class mechanumTest extends LinearOpMode {
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
             frontRight.setVelocity(Speed*(clip((-ly)-lx,-1,1)+rx));
-            backRight.setVelocity(Speed*(clip((-ly)+lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip((-ly)+lx,-1,1)-rx));
+            backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
+            frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
             backLeft.setVelocity(Speed*(clip((-ly)-lx,-1,1)-rx));
 //            frontLeft.setPower(1);
 //            backRight.setPower(1);
