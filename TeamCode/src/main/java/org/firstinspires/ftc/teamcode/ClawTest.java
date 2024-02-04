@@ -20,6 +20,12 @@ public class ClawTest extends LinearOpMode {
         clawLeft  = janx.lc;
         clawRight = janx.rc;
         nodder    = janx.nod;
+//        janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+//        leftClaw  = janx.lc;
+//        rightClaw = janx.rc;
+//        nodder    = janx.nod;
+//        extender  = janx.ext;
+//        rotater   = janx.turn;
 //        clawRight = hardwareMap.get(Servo.class,"clawRight");
 //        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();

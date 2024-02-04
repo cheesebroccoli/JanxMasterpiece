@@ -16,11 +16,7 @@ public class mechanumTest extends LinearOpMode {
     private DcMotorEx backRight;
     private DcMotorEx frontLeft;
     private DcMotorEx backLeft;
-    private Servo leftClaw;
-    private Servo rightClaw;
-    private Servo nodder;
-    private DcMotorEx extender;
-    private DcMotorEx rotater;
+
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
@@ -34,14 +30,6 @@ public class mechanumTest extends LinearOpMode {
         frontRight = janx.fr;
         backRight =  janx.br;
         backLeft =   janx.bl;
-
-
-        janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-        leftClaw  = janx.lc;
-        rightClaw = janx.rc;
-        nodder    = janx.nod;
-        extender  = janx.ext;
-        rotater   = janx.turn;
 
 //        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 //        backRight =  hardwareMap.get(DcMotorEx.class, "backRight");
