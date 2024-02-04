@@ -27,33 +27,20 @@ public class TemplateJanx {
     public TemplateJanx(HardwareMap h){
         hwMap = h;
     }
-    public void motorInit(String motor){
-        hwMap.get(DcMotorEx.class, motor);
-        motor.setDirection(DcMotor.Direction.FORWARD);
-        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motor.setPower(0);
-    }
-    public void wheelInit(String frontRight, String backRight, String backleft, String frontLeft,String leftClaw, String rightClaw, String nodder, String armextend, String armTurn) {
+//    public void motorInit(String motor){
+//        hwMap.get(DcMotorEx.class, motor);
+//        motor.setDirection(DcMotor.Direction.FORWARD);
+//        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        motor.setPower(0);
+//    }
+    public void wheelInit(String frontRight, String backRight, String backleft, String frontLeft) {
         //when you make this in teleop or autonomous, you can import hardware.DcMotor with the keyword hardwareMap
         fr  = hwMap.get(DcMotorEx.class, frontRight);
         br  = hwMap.get(DcMotorEx.class, backRight);
         fl  = hwMap.get(DcMotorEx.class, frontLeft);
         bl  = hwMap.get(DcMotorEx.class, backleft);
-        ext = hwMap.get(DcMotorEx.class,armextend);
-        turn = hwMap.get(DcMotorEx.class,armTurn);
-        nod = hwMap.get(Servo.class,nodder);
-        lc  = hwMap.get(Servo.class, leftClaw);
-        rc  = hwMap.get(Servo.class,rightClaw);
 
-        ext.setDirection(DcMotor.Direction.FORWARD);
-        ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ext.setPower(0);
-        turn.setDirection(DcMotor.Direction.FORWARD);
-        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turn.setPower(0);
         fr.setDirection(DcMotor.Direction.FORWARD);
         br.setDirection(DcMotor.Direction.FORWARD);
         fl.setDirection(DcMotor.Direction.REVERSE);
@@ -70,6 +57,24 @@ public class TemplateJanx {
         fl.setPower(0);
         br.setPower(0);
         fr.setPower(0);
+    }
+
+    public void arminit(String leftClaw, String rightClaw, String nodder, String armextend, String armTurn){
+        ext = hwMap.get(DcMotorEx.class,armextend);
+        turn = hwMap.get(DcMotorEx.class,armTurn);
+        nod = hwMap.get(Servo.class,nodder);
+        lc  = hwMap.get(Servo.class, leftClaw);
+        rc  = hwMap.get(Servo.class,rightClaw);
+
+        ext.setDirection(DcMotor.Direction.FORWARD);
+        ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ext.setPower(0);
+        turn.setDirection(DcMotor.Direction.FORWARD);
+        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turn.setPower(0);
+
     }
     public void turnOn(double strength){
         fr.setPower(strength);

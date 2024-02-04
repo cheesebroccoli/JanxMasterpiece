@@ -16,20 +16,30 @@ public class mechanumTest extends LinearOpMode {
     private DcMotorEx backRight;
     private DcMotorEx frontLeft;
     private DcMotorEx backLeft;
-    private DcMotorEx screwLeft;
-    private DcMotorEx screwRight;
-
+    private Servo leftClaw;
+    private Servo rightClaw;
+    private Servo nodder;
+    private DcMotorEx extender;
+    private DcMotorEx rotater;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
     @Override
     public void runOpMode() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations");
+        janx.wheelInit("frontRight","backRight","backLeft","frontLeft");
         frontLeft =  janx.fl;
         frontRight = janx.fr;
         backRight =  janx.br;
         backLeft =   janx.bl;
+
+        janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        leftClaw  = janx.lc;
+        rightClaw = janx.rc;
+        nodder    = janx.nod;
+        extender  = janx.ext;
+        rotater   = janx.turn;
+
 //        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 //        backRight =  hardwareMap.get(DcMotorEx.class, "backRight");
 //        frontLeft =  hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -72,18 +82,18 @@ public class mechanumTest extends LinearOpMode {
     /**
      * Describe this function...
      */
-    private void Lift() {
-        if (gamepad2.dpad_down) {
-            screwLeft.setPower(1);
-            screwRight.setPower(1);
-        } else if (gamepad2.dpad_up) {
-            screwLeft.setPower(-1);
-            screwRight.setPower(-1);
-        } else {
-            screwLeft.setPower(0);
-            screwRight.setPower(0);
-        }
-    }
+//    private void Lift() {
+//        if (gamepad2.dpad_down) {
+//            screwLeft.setPower(1);
+//            screwRight.setPower(1);
+//        } else if (gamepad2.dpad_up) {
+//            screwLeft.setPower(-1);
+//            screwRight.setPower(-1);
+//        } else {
+//            screwLeft.setPower(0);
+//            screwRight.setPower(0);
+//        }
+//    }
 
     /**
      * Describe this function...

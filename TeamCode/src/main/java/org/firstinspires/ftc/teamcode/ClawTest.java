@@ -16,10 +16,10 @@ public class ClawTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.init("frontRight","backRight","backLeft","frontLeft","clawLeft","clawRight","nodder","armExtension","arm rotations");
-          clawLeft = janx.lc;
-          clawRight = janx.rc;
-          nodder = janx.nod;
+        janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        clawLeft  = janx.lc;
+        clawRight = janx.rc;
+        nodder    = janx.nod;
 //        clawRight = hardwareMap.get(Servo.class,"clawRight");
 //        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();
