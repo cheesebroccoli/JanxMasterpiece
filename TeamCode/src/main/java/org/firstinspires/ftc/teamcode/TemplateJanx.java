@@ -25,6 +25,7 @@ public class TemplateJanx {
     //clockwise from front right
     //doubles as an initialisation
     public TemplateJanx(HardwareMap h){
+
         hwMap = h;
     }
 //    public void motorInit(String motor){

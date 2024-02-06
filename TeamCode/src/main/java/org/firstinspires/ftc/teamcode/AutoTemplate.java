@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 @Autonomous
 public class AutoTemplate extends LinearOpMode {
@@ -41,7 +45,7 @@ public class AutoTemplate extends LinearOpMode {
         armExt =     robot.ext;
         armTurn =    robot.turn;
 
-        forward(10);
+        forward(2);
 
     }
 
