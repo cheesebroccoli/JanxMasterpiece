@@ -23,7 +23,7 @@ Things I need to do:
   * Set it to opMode
   
  Autonomous:
-  * Figure out how to import hardware(Alex)
+  * Figure out how to import hardware (Alex)
   * Set linear op (with the times for all 4 secions)
   * Create a class for autnomous that we can use all the methods to easily create all 4 guys
   * Figure out how to program rotation?
