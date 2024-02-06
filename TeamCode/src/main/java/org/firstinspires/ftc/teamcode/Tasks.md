@@ -16,14 +16,15 @@ there may also be buttons that will grab a pixel automatically and drops it off
 -------------------------------------------------------------------------
 Things I need to do:
  Claw and arm test:
-  * Fix wiring.
+  * PIDF arm extender and roation
  
  Mechanum test:
-  * Strife
   * Set it to opMode
   
  Autonomous:
-  * Figure out how to import hardware (Alex)
+  * Figure out how to import hardware (Alex- it isn't working)
+  * 
+  * 
   * Set linear op (with the times for all 4 secions)
   * Create a class for autnomous that we can use all the methods to easily create all 4 guys
   * Figure out how to program rotation?
