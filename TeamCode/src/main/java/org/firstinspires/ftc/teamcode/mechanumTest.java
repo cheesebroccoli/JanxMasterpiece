@@ -38,8 +38,8 @@ public class mechanumTest extends LinearOpMode {
             while (opModeIsActive()) {
                 // Put loop blocks here.
                 mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-                telemetry.addData("Left Stick Y", gamepad1.left_stick_y);
-                telemetry.addData("Right Stick X", gamepad1.right_stick_x);
+                telemetry.addData("Y", gamepad1.left_stick_y);
+                telemetry.addData("X", gamepad1.left_stick_x);
                 telemetry.update();
             }
         }
@@ -47,13 +47,13 @@ public class mechanumTest extends LinearOpMode {
 
     private void mecanum(double LSY, double LSX, double RSX) {
         int Speed = 1600;
-        double lx = Math.pow(LSY,3);
+        double lx = Math.pow(LSX,3);
         double ly = -(Math.pow(LSY,3));
         double rx = Math.pow(RSX,3);
         if(LSX != 0 || LSY != 0 || RSX != 0){
             frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
-            backRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
+            backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
+            frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
             backLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
         }
         else{
