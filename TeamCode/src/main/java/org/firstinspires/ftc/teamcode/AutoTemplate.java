@@ -42,7 +42,7 @@ public class AutoTemplate extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backRight  = hardwareMap.get(DcMotorEx.class, "backRight");
         frontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        backLeft   = hardwareMap.get(DcMotorEx.class, "backleft");
+        backLeft   = hardwareMap.get(DcMotorEx.class, "backLeft");
 
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
