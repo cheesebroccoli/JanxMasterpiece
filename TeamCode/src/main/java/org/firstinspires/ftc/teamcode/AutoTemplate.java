@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -13,8 +14,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
 public class AutoTemplate extends LinearOpMode {
-    private Servo clawLeft;
-    private Servo clawRight;
+    private Servo lc;
+    private Servo rc;
     private Servo nodder;
     private DcMotorEx extender;
 
@@ -23,29 +24,54 @@ public class AutoTemplate extends LinearOpMode {
     private DcMotorEx backRight;
     private DcMotorEx frontLeft;
     private DcMotorEx backLeft;
-    private DcMotorEx armTurn;
-    private DcMotorEx armExt;
-
-//    private com.qualcomm.robotcore.hardware.HardwareMap HardwareMap;
-    TemplateJanx robot = new TemplateJanx(hardwareMap);
-
+    private DcMotorEx turn;
+    private DcMotorEx ext;
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.wheelInit("frontRight","backRight","backLeft","frontLeft");
-        robot.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-        frontLeft =  robot.fl;
-        frontRight = robot.fr;
-        backRight =  robot.br;
-        backLeft =   robot.bl;
-        extender  =  robot.ext;
-        rotater   =  robot.turn;
-        clawLeft  =  robot.lc;
-        clawRight =  robot.rc;
-        nodder    =  robot.nod;
-        armExt =     robot.ext;
-        armTurn =    robot.turn;
+        waitForStart();
+        if (opModeIsActive()) {
+            // Put run blocks here.
+            while (opModeIsActive()) {
+                initialise();
+                forward(2);
+            }
+        }
 
-        forward(2);
+    }
+    private void initialise(){
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight  = hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft   = hardwareMap.get(DcMotorEx.class, "backleft");
+
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+// janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        ext =       hardwareMap.get(DcMotorEx.class,"armExtension");
+        turn =      hardwareMap.get(DcMotorEx.class,"arm rotations");
+        nodder =    hardwareMap.get(Servo.class,"nodder");
+        lc  =       hardwareMap.get(Servo.class, "clawLeft");
+        rc  =       hardwareMap.get(Servo.class,"clawRight");
+
+        ext.setDirection(DcMotor.Direction.FORWARD);
+        ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ext.setPower(0);
+        turn.setDirection(DcMotor.Direction.FORWARD);
+        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turn.setPower(0);
+
 
     }
 
