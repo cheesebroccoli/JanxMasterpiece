@@ -19,6 +19,10 @@ public class AutoTemplate extends LinearOpMode {
     private DcMotorEx backRight;
     private DcMotorEx frontLeft;
     private DcMotorEx backLeft;
+    private DcMotorEx armTurn;
+    private DcMotorEx armExt;
+
+//    private com.qualcomm.robotcore.hardware.HardwareMap HardwareMap;
     TemplateJanx robot = new TemplateJanx(hardwareMap);
 
     @Override
@@ -34,6 +38,8 @@ public class AutoTemplate extends LinearOpMode {
         clawLeft  =  robot.lc;
         clawRight =  robot.rc;
         nodder    =  robot.nod;
+        armExt =     robot.ext;
+        armTurn =    robot.turn;
 
         forward(10);
 
