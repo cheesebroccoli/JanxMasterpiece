@@ -16,8 +16,7 @@ there may also be buttons that will grab a pixel automatically and drops it off
 -------------------------------------------------------------------------
 Things I need to do:
  Claw and arm test:
-  * Fix claw (wiring)
-  * Get arm rotation to work
+  * Fix wiring.
  
  Mechanum test:
   * Strife
