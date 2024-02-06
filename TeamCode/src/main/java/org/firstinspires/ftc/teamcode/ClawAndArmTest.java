@@ -24,7 +24,7 @@ public class ClawAndArmTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.arminit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
         clawLeft  = janx.lc;
         clawRight = janx.rc;
         nodder    = janx.nod;
