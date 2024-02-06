@@ -40,15 +40,15 @@ public class AutoTemplate extends LinearOpMode {
     }
 
     private void forward(long time){
-        robot.turnOn(1);
+        turnOn(1);
         sleep(time);
-        robot.turnOff();
+        turnOff();
     }
 
     private void backward(long time){
-        robot.turnOn(-1);
+        turnOn(-1);
         sleep(time);
-        robot.turnOff();
+        turnOff();
     }
     private void Strife(String direction, long time){
         if(direction.equals("LEFT")) {
@@ -64,7 +64,7 @@ public class AutoTemplate extends LinearOpMode {
             frontLeft.setPower(-1);
         }
         sleep(time);
-        robot.turnOff();
+        turnOff();
 
     }
     private void turn(String direction,double seconds){
@@ -87,6 +87,18 @@ public class AutoTemplate extends LinearOpMode {
 
     }
 
+    public void turnOn(double strength){
+        frontRight.setPower(strength);
+        backRight.setPower(strength);
+        backLeft.setPower(strength);
+        frontLeft.setPower(strength);
+    }
+    public void turnOff(){
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backLeft.setPower(0);
+        frontLeft.setPower(0);
+    }
     private void arm(){
 
     }
