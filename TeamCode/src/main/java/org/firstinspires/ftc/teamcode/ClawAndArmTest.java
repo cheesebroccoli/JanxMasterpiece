@@ -16,7 +16,10 @@ public class ClawAndArmTest extends LinearOpMode {
 
     double power = .005;
     /**
-     * This function is executed when this Op Mode is selected from the Driver Station.
+     * TO DO:
+     * Fix claw (wiring)
+     * Get arm rotation to work
+     * set nodder to be be less intense
      */
     @Override
     public void runOpMode() {
@@ -31,31 +34,33 @@ public class ClawAndArmTest extends LinearOpMode {
 //        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();
         if (opModeIsActive()) {
-            clawLeft.setPosition(1);
-            clawRight.setPosition(0);
             // Put run blocks here.
             //initialisations here
             while (opModeIsActive()) {
+//                clawLeft.setPosition(1);
+//                clawRight.setPosition(0);
                 claw(gamepad2.left_stick_x);
                 arm();
-                telemetry.addData("ResultLeft",clawLeft.getPosition());
-                telemetry.addData("ResultRight",clawRight.getPosition());
+                telemetry.addData("inputActually",gamepad2.left_stick_y);
+                telemetry.addData("NodderPos",nodder.getPosition());
                 telemetry.update();
             }
         }
     }
     /**claw- Gamepad2 left stick**/
     private void claw(double input){
-        //the claw nodder
-        if(gamepad2.left_stick_y>0){
-            nodder.setPosition(nodder.getPosition()+power);
+        /**the claw nodder**/
+        double y = .1;
+        double x = Math.pow(gamepad2.left_stick_y,3);
+        if(x>0){
+            nodder.setPosition(nodder.getPosition()+y);
         }
-        else if(gamepad2.left_stick_y<0){
-            nodder.setPosition(nodder.getPosition()-power);
+        else if(x<0){
+            nodder.setPosition(nodder.getPosition()-y);
         }
         //opens and closes claw
         telemetry.addData("input: ",input);
-        //input:gamepad2.left_stick_x, by the by
+        /**input:gamepad2.left_stick_x, by the by**/
             if(input>0){
                 //Left:open
               clawLeft.setPosition(clawLeft.getPosition()-power);
@@ -69,45 +74,48 @@ public class ClawAndArmTest extends LinearOpMode {
         else {
             //setpositions.
             if (gamepad2.y) {
-                // move to 0 degrees.
-                //fully closed
+                /** move to 0 degrees.
+                //fully closed**/
                 clawLeft.setPosition(0);
                 clawRight.setPosition(1);
+                nodder.setPosition(0);
             } else if (gamepad2.x || gamepad2.b) {
-                // move to 90 degrees.
+                /** move to 90 degrees.**/
                 clawLeft.setPosition(0.5);
                 clawRight.setPosition(0.5);
+                nodder.setPosition(.5);
             } else if (gamepad2.a) {
-                // move to 180 degrees.
-                //fully open
+                /** move to 180 degrees.
+                //fully open**/
                 clawLeft.setPosition(1);
                 clawRight.setPosition(0);
+                nodder.setPosition(1);
             }
         }
     }
     /**arm- Gamepad2 right stick**/
     //need to add pidf!
     private void arm(){
-        //right stick y -extender
+        /**Right stick y (extender)**/
         if(gamepad2.right_stick_y>0){
-            //goes up
+            /**goes up**/
             extender.setPower(1);
         }
         else if(gamepad2.right_stick_y<0){
-            //goes down
+            /**goes down**/
             extender.setPower(-1);
         }
         else{
             extender.setPower(0);
         }
-        //Right stick x- turn
-        if(gamepad2.right_stick_x<0){
-            //goes...left?
-            rotater.setPower(-1);
+        /**Right stick x (turn)**/
+        if(gamepad2.dpad_down){
+            /**goes left?**/
+            rotater.setPower(5);
         }
-        else if(gamepad2.right_stick_x>0){
-            //goes... right?
-            rotater.setPower(1);
+        else if(gamepad2.dpad_up){
+            /**goes right?**/
+            rotater.setPower(-5);
         }
         else{
             rotater.setPower(0);
