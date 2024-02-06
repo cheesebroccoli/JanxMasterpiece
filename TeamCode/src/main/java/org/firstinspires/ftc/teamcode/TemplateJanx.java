@@ -80,18 +80,7 @@ public class TemplateJanx {
 //        turn.setPower(0);
 
     }
-    public void turnOn(double strength){
-        fr.setPower(strength);
-        br.setPower(strength);
-        bl.setPower(strength);
-        fl.setPower(strength);
-    }
-    public void turnOff(){
-        fr.setPower(0);
-        br.setPower(0);
-        bl.setPower(0);
-        fl.setPower(0);
-    }
+
 
 
 
