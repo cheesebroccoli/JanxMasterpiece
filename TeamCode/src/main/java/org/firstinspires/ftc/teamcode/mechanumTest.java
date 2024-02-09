@@ -50,6 +50,7 @@ public class mechanumTest extends LinearOpMode {
         double lx = Math.pow(LSX,3);
         double ly = -(Math.pow(LSY,3));
         double rx = Math.pow(RSX,3);
+        //is RSX backwards? I may need to fix the canva
         if(LSX != 0 || LSY != 0 || RSX != 0){
             frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
             frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
