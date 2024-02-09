@@ -26,6 +26,8 @@ public class AutoTemplate extends LinearOpMode {
     private DcMotorEx backLeft;
     private DcMotorEx turn;
     private DcMotorEx ext;
+
+    private long mulitplier = 500;
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart();
@@ -33,7 +35,18 @@ public class AutoTemplate extends LinearOpMode {
             // Put run blocks here.
             while (opModeIsActive()) {
                 initialise();
-                forward(2);
+                forward(1);
+                turnOff();
+                sleep(1000);
+                backward(1);
+                turnOff();
+                sleep(1003);
+                strife("LEFT",1);
+                turnOff();
+                sleep(1003);
+                turn("LEFT",.2);
+                turnOff();
+                sleep(1003);
             }
         }
 
@@ -73,16 +86,15 @@ public class AutoTemplate extends LinearOpMode {
 
     private void forward(long time){
         turnOn(1);
-        sleep(time);
+        sleep(time*mulitplier);
         turnOff();
     }
 
     private void backward(long time){
         turnOn(-1);
-        sleep(time);
-        turnOff();
-    }
-    private void Strife(String direction, long time){
+        sleep(time*mulitplier);
+        turnOff();    }
+    private void strife(String direction, long time){
         if(direction.equals("LEFT")) {
             frontRight.setPower(1);
             backRight.setPower(-1);
@@ -115,7 +127,9 @@ public class AutoTemplate extends LinearOpMode {
             backRight.setPower(right);
             backLeft.setPower(left);
             frontLeft.setPower(left);
+            sleep(1000);
         }
+        turnOff();
 
     }
 

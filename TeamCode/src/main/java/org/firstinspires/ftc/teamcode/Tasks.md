@@ -19,7 +19,7 @@ Things I need to do:
   * PIDF arm extender and roation
  
  Mechanum test:
-  * Set it to opMode
+  *
   
  Autonomous:
   * Figure out how to import hardware (Alex- it isn't working)
