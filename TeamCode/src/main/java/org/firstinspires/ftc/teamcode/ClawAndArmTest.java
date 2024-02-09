@@ -69,7 +69,7 @@ public class ClawAndArmTest extends LinearOpMode {
            screwRight.setPower(1);
         }
         else if(gamepad2.left_bumper){
-            //down
+
             screwLeft.setPower(-1);
             screwRight.setPower(-1);
         }
@@ -128,6 +128,7 @@ public class ClawAndArmTest extends LinearOpMode {
     /**arm- Gamepad2 right stick**/
     //need to add pidf!
     private void arm(){
+        rotater.setTargetPositionTolerance(10);
         /**Right stick y (extender)**/
         if(gamepad2.right_stick_y>0){
             /**goes up**/
@@ -143,11 +144,11 @@ public class ClawAndArmTest extends LinearOpMode {
         /**Right stick x (turn)**/
         if(gamepad2.dpad_down){
             /**goes left?**/
-            rotater.setPower(5);
+            rotater.setTargetPosition(rotater.getCurrentPosition()+5);
         }
         else if(gamepad2.dpad_up){
             /**goes right?**/
-            rotater.setPower(-5);
+            rotater.setTargetPosition(rotater.getCurrentPosition()-5);
         }
         else{
             rotater.setPower(0);
