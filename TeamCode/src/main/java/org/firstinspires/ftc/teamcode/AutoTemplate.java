@@ -26,6 +26,8 @@ public class AutoTemplate extends LinearOpMode {
     private DcMotorEx backLeft;
     private DcMotorEx turn;
     private DcMotorEx ext;
+
+    private long mulitplier = 500;
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart();
@@ -33,67 +35,66 @@ public class AutoTemplate extends LinearOpMode {
             // Put run blocks here.
             while (opModeIsActive()) {
                 initialise();
+                forward(1);
+                turnOff();
+                sleep(1000);
+                backward(1);
+                turnOff();
+                sleep(1003);
+                strife("LEFT",1);
+                turnOff();
+                sleep(1003);
+                turn("LEFT",.2);
+                turnOff();
+                sleep(1003);
             }
         }
 
     }
     private void initialise(){
-        TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.wheelInit("frontRight","backRight","backLeft","frontLeft");
-        frontLeft =  janx.fl;
-        frontRight = janx.fr;
-        backRight =  janx.br;
-        backLeft =   janx.bl;
-        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-        lc  = janx.lc;
-        rc = janx.rc;
-        nodder    = janx.nod;
-        extender  = janx.ext;
-        rotater   = janx.turn;
-//        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
-//        backRight  = hardwareMap.get(DcMotorEx.class, "backRight");
-//        frontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
-//        backLeft   = hardwareMap.get(DcMotorEx.class, "backLeft");
-//
-//        frontRight.setDirection(DcMotor.Direction.FORWARD);
-//        backRight.setDirection(DcMotor.Direction.FORWARD);
-//        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-//        backLeft.setDirection(DcMotor.Direction.REVERSE);
-//        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//// janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-//        ext =       hardwareMap.get(DcMotorEx.class,"armExtension");
-//        turn =      hardwareMap.get(DcMotorEx.class,"arm rotations");
-//        nodder =    hardwareMap.get(Servo.class,"nodder");
-//        lc  =       hardwareMap.get(Servo.class, "clawLeft");
-//        rc  =       hardwareMap.get(Servo.class,"clawRight");
-//
-//        ext.setDirection(DcMotor.Direction.FORWARD);
-//        ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        ext.setPower(0);
-//        turn.setDirection(DcMotor.Direction.FORWARD);
-//        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        turn.setPower(0);
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backRight  = hardwareMap.get(DcMotorEx.class, "backRight");
+        frontLeft  = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        backLeft   = hardwareMap.get(DcMotorEx.class, "backLeft");
+
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+// janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        ext =       hardwareMap.get(DcMotorEx.class,"armExtension");
+        turn =      hardwareMap.get(DcMotorEx.class,"arm rotations");
+        nodder =    hardwareMap.get(Servo.class,"nodder");
+        lc  =       hardwareMap.get(Servo.class, "clawLeft");
+        rc  =       hardwareMap.get(Servo.class,"clawRight");
+
+        ext.setDirection(DcMotor.Direction.FORWARD);
+        ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ext.setPower(0);
+        turn.setDirection(DcMotor.Direction.FORWARD);
+        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        turn.setPower(0);
 
 
     }
 
     private void forward(long time){
         turnOn(1);
-        sleep(time);
+        sleep(time*mulitplier);
         turnOff();
     }
 
     private void backward(long time){
         turnOn(-1);
-        sleep(time);
-        turnOff();
-    }
-    private void Strife(String direction, long time){
+        sleep(time*mulitplier);
+        turnOff();    }
+    private void strife(String direction, long time){
         if(direction.equals("LEFT")) {
             frontRight.setPower(1);
             backRight.setPower(-1);
@@ -126,7 +127,9 @@ public class AutoTemplate extends LinearOpMode {
             backRight.setPower(right);
             backLeft.setPower(left);
             frontLeft.setPower(left);
+            sleep(1000);
         }
+        turnOff();
 
     }
 
