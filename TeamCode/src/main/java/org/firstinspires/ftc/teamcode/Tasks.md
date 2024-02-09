@@ -19,9 +19,7 @@ Things I need to do:
   * PIDF arm extender and roation
   
  Autonomous:
-  * Set linear op (with the times for all 4 secions)
-  * Create a class for autnomous that we can use all the methods to easily create all 4 guys
-  * Figure out how to program rotation?
+  * Set the autonomous to do what they're supposed to do
  
  Full Program:
   * create a way so that you press one button
