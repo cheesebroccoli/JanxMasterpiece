@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Thread.sleep;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 //ftclib library
 public class TemplateJanx {
@@ -82,7 +85,75 @@ public class TemplateJanx {
 
     }
 
+    public void forward(long time) throws InterruptedException {
+        turnOn(1);
+        sleep(time);
+        turnOff();
+    }
 
+    public void backward(long time) throws InterruptedException{
+        turnOn(-1);
+        sleep(time);
+        turnOff();
+    }
+    public void Strife(String direction, long time)throws InterruptedException{
+        if(direction.equals("LEFT")) {
+            fr.setPower(1);
+            br.setPower(-1);
+            bl.setPower(1);
+            fl.setPower(-1);
+        }
+        else if(direction.equals("RIGHT")){
+            fr.setPower(-1);
+            br.setPower(1);
+            bl.setPower(1);
+            fl.setPower(-1);
+        }
+        sleep(time);
+        turnOff();
 
+    }
+    public void turn(String direction,double seconds){
+        double left = 0;
+        double right = 0;
+        if(direction.equals("LEFT")){
+            left = -1;
+            right = 1;
+        }
+        else if(direction.equals("RIGHT")){
+            left = 1;
+            right =-1;
+        }
+        for(double i = 0; i<seconds; i++){
+            fr.setPower(right);
+            br.setPower(right);
+            bl.setPower(left);
+            fl.setPower(left);
+        }
+
+    }
+
+    private void turnOn(double strength){
+        fr.setPower(strength);
+        br.setPower(strength);
+        bl.setPower(strength);
+        fl.setPower(strength);
+    }
+    private void turnOff(){
+        fr.setPower(0);
+        br.setPower(0);
+        bl.setPower(0);
+        fl.setPower(0);
+    }
+    public void claw(String pos){
+        if(pos.equals("CLOSE")){
+            lc.setPosition(0);
+            rc.setPosition(1);
+        }
+        else if(pos.equals("OPEN")){
+            lc.setPosition(1);
+            rc.setPosition(0);
+        }
+    }
 
 }
