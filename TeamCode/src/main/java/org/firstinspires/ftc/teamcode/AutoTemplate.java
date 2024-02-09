@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous
+    @Autonomous
 public class AutoTemplate extends LinearOpMode {
     private Servo lc;
     private Servo rc;
