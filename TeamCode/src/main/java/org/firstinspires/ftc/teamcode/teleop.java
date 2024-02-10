@@ -105,53 +105,12 @@ public class teleop extends OpMode {
             clawLeft.setPosition(clawLeft.getPosition()+power);
             clawRight.setPosition(clawRight.getPosition()-power);
         }
-        else {
-            //setpositions.
-            if (gamepad2.y) {
-                /** move to 0 degrees.
-                 //fully closed**/
-                clawLeft.setPosition(0);
-                clawRight.setPosition(1);
-                nodder.setPosition(0);
-            } else if (gamepad2.x || gamepad2.b) {
-                /** move to 90 degrees.**/
-                clawLeft.setPosition(0.5);
-                clawRight.setPosition(0.5);
-                nodder.setPosition(.5);
-            } else if (gamepad2.a) {
-                /** move to 180 degrees.
-                 //fully open**/
-                clawLeft.setPosition(1);
-                clawRight.setPosition(0);
-                nodder.setPosition(1);
-            }
+        else
+        {
         }
     }
     private void arm(){
-        /**Right stick y (extender)**/
-        if(gamepad2.right_stick_y>0){
-            /**goes up**/
-            extender.setPower(1);
-        }
-        else if(gamepad2.right_stick_y<0){
-            /**goes down**/
-            extender.setPower(-1);
-        }
-        else{
-            extender.setPower(0);
-        }
-        /**Right stick x (turn)**/
-        if(gamepad2.dpad_down){
-            /**goes left?**/
-            rotater.setPower(5);
-        }
-        else if(gamepad2.dpad_up){
-            /**goes right?**/
-            rotater.setPower(-5);
-        }
-        else{
-            rotater.setPower(0);
-        }
+
 
     }
 }

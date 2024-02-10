@@ -30,25 +30,15 @@ public class ClawAndArmTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        janx.armInit("armExtension","arm rotations","ScrewLeft","ScrewRight");
+        extender  = janx.ext;
+        rotater   = janx.turn;
+        screwRight = janx.sr;
+        screwLeft = janx.sl;
+        janx.clawInit("clawLeft","clawRight","nodder");
         clawLeft  = janx.lc;
         clawRight = janx.rc;
         nodder    = janx.nod;
-        extender  = janx.ext;
-        rotater   = janx.turn;
-        screwLeft  = hardwareMap.get(DcMotorEx.class, "ScrewLeft");
-        screwRight  = hardwareMap.get(DcMotorEx.class,"ScrewRight");
-        screwLeft.setDirection(DcMotor.Direction.FORWARD);
-        screwLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        screwLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        screwLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
-        screwLeft.setPower(0);
-        screwRight.setDirection(DcMotor.Direction.FORWARD);
-        screwRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        screwRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
-        screwRight.setPower(0);
-        rotater.setTargetPosition(0);
 //        clawRight = hardwareMap.get(Servo.class,"clawRight");
 //        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();
@@ -134,7 +124,6 @@ public class ClawAndArmTest extends LinearOpMode {
     /**arm- Gamepad2 right stick**/
     //need to add pidf!
     private void arm(){
-        rotater.setTargetPositionTolerance(10);
         /**Right stick y (extender)**/
         if(gamepad2.right_stick_y>0){
             /**goes up**/
@@ -148,6 +137,7 @@ public class ClawAndArmTest extends LinearOpMode {
             extender.setPower(0);
         }
         /**Right stick x (turn)**/
+        rotater.setTargetPositionTolerance(10);
         if(gamepad2.dpad_up){
             /**goes left?**/
             //rotater.setTargetPosition(rotater.getTargetPosition()+35);
