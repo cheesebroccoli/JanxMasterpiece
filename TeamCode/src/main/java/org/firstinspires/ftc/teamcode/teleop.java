@@ -20,6 +20,9 @@ public class teleop extends OpMode {
 
     private DcMotorEx rotater;
 
+    private DcMotorEx screwRight;
+    private DcMotorEx screwLeft;
+
     double power = .005;
     @Override
     public void init() {
@@ -29,12 +32,15 @@ public class teleop extends OpMode {
         frontRight = janx.fr;
         backRight =  janx.br;
         backLeft =   janx.bl;
-        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        janx.armInit("armExtension","arm rotations","ScrewLeft","ScrewRight");
+        extender  = janx.ext;
+        rotater   = janx.turn;
+        screwRight = janx.sr;
+        screwLeft = janx.sl;
+        janx.clawInit("clawLeft","clawRight","nodder");
         clawLeft  = janx.lc;
         clawRight = janx.rc;
         nodder    = janx.nod;
-        extender  = janx.ext;
-        rotater   = janx.turn;
     }
 
     @Override
@@ -99,53 +105,12 @@ public class teleop extends OpMode {
             clawLeft.setPosition(clawLeft.getPosition()+power);
             clawRight.setPosition(clawRight.getPosition()-power);
         }
-        else {
-            //setpositions.
-            if (gamepad2.y) {
-                /** move to 0 degrees.
-                 //fully closed**/
-                clawLeft.setPosition(0);
-                clawRight.setPosition(1);
-                nodder.setPosition(0);
-            } else if (gamepad2.x || gamepad2.b) {
-                /** move to 90 degrees.**/
-                clawLeft.setPosition(0.5);
-                clawRight.setPosition(0.5);
-                nodder.setPosition(.5);
-            } else if (gamepad2.a) {
-                /** move to 180 degrees.
-                 //fully open**/
-                clawLeft.setPosition(1);
-                clawRight.setPosition(0);
-                nodder.setPosition(1);
-            }
+        else
+        {
         }
     }
     private void arm(){
-        /**Right stick y (extender)**/
-        if(gamepad2.right_stick_y>0){
-            /**goes up**/
-            extender.setPower(1);
-        }
-        else if(gamepad2.right_stick_y<0){
-            /**goes down**/
-            extender.setPower(-1);
-        }
-        else{
-            extender.setPower(0);
-        }
-        /**Right stick x (turn)**/
-        if(gamepad2.dpad_down){
-            /**goes left?**/
-            rotater.setPower(5);
-        }
-        else if(gamepad2.dpad_up){
-            /**goes right?**/
-            rotater.setPower(-5);
-        }
-        else{
-            rotater.setPower(0);
-        }
+
 
     }
 }

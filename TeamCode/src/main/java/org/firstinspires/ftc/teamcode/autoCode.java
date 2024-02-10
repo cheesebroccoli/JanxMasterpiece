@@ -26,7 +26,7 @@ public class autoCode extends LinearOpMode {
     private DcMotorEx turn;
     private DcMotorEx ext;
 
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime     runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -39,8 +39,8 @@ public class autoCode extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.35;
-    static final double     TURN_SPEED              = 0.25;
+    static final double     DRIVE_SPEED             = 1.0;
+    static final double     TURN_SPEED              = 0.9;
 
     @Override
     public void runOpMode() {
@@ -66,6 +66,11 @@ public class autoCode extends LinearOpMode {
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
 
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -89,9 +94,15 @@ public class autoCode extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+        /*
         encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        encoderDrive(TURN_SPEED,   20, -20, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+
+        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout*/
+        encoderDrive(DRIVE_SPEED, 60, 60, 10.0);  // S3: Reverse 24 Inches with 4 Sec timeout*/
+
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -116,30 +127,24 @@ public class autoCode extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition())/2 + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = (backRight.getCurrentPosition() + frontRight.getCurrentPosition())/2 + (int)(rightInches * COUNTS_PER_INCH);
-
+            newLeftTarget = (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition())/2 + (int)(leftInches * COUNTS_PER_INCH * 60 / 53);
+            newRightTarget = (backRight.getCurrentPosition() + frontRight.getCurrentPosition())/2 + (int)(rightInches * COUNTS_PER_INCH * 60 / 53);
+            backLeft.setTargetPosition(newLeftTarget);
             frontLeft.setTargetPosition(newLeftTarget);
             backRight.setTargetPosition(newRightTarget);
-            frontLeft.setPower(Math.abs(speed));
-            backRight.setPower(Math.abs(speed));
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
             frontRight.setTargetPosition(newRightTarget);
-            backLeft.setTargetPosition(newLeftTarget);
 
             // Turn On RUN_TO_POSITION
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
+            backRight.setPower(Math.abs(speed) * 0.94);
+            frontRight.setPower(Math.abs(speed) * 0.94);
             frontLeft.setPower(Math.abs(speed));
-            backRight.setPower(Math.abs(speed));
-            frontRight.setPower(Math.abs(speed));
             backLeft.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
@@ -148,7 +153,6 @@ public class autoCode extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
-
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
                    (frontRight.isBusy() && frontLeft.isBusy())) {
@@ -165,25 +169,17 @@ public class autoCode extends LinearOpMode {
 
             // Stop all motion;
             backRight.setPower(0);
-            frontLeft.setPower(0);
-            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             frontRight.setPower(0);
-
+            frontLeft.setPower(0);
             backLeft.setPower(0);
 
             // Turn off RUN_TO_POSITION
             backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
         }
-    }
-    public void moveClaw(){
-        //reach out arm
-        //move claws out.
     }
 }
