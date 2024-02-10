@@ -62,6 +62,7 @@ public class teleop extends OpMode {
             clawLeft.setPosition(0);
             clawRight.setPosition(0);
         }
+        claw();
         arm();
         lift();
         telemetry.addData("inputActually", gamepad2.left_stick_y);
@@ -131,25 +132,22 @@ public class teleop extends OpMode {
         }
         //opens and closes claw
         if (gamepad2.left_bumper) {
-//            clawLeft.setPosition(0);
-//            clawRight.setPosition(1);
-            clawLeft.setPosition(clawLeft.getPosition() + power);
+            clawLeft.setPosition(clawLeft.getPosition() - power);
             clawRight.setPosition(clawRight.getPosition() - power);
-            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
-                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-            }
+//            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
+//                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
+//                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
+//            }
 
         }
         if (gamepad2.right_bumper) {
-//            clawLeft.setPosition(1);
-//            clawRight.setPosition(0);
+//
             clawLeft.setPosition(clawLeft.getPosition() - power);
-            clawRight.setPosition(clawRight.getPosition() + power);
-            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
-                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-            }
+            clawRight.setPosition(clawRight.getPosition() - power);
+//            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
+//                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
+//                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
+//            }
 
         }
         if (gamepad2.y) {

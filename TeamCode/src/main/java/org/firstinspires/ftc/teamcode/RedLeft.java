@@ -36,7 +36,7 @@ public class RedLeft extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 1.0;
+    static final double     DRIVE_SPEED             = 1600.0;
     static final double     TURN_SPEED              = 0.9;
 
     @Override
@@ -88,6 +88,7 @@ public class RedLeft extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        encoderDrive(DRIVE_SPEED,2,2,5)
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -97,8 +98,6 @@ public class RedLeft extends LinearOpMode {
         encoderDrive(TURN_SPEED,   20, -20, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
 
         encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout*/
-        encoderDrive(DRIVE_SPEED, 60, 60, 10.0);  // S3: Reverse 24 Inches with 4 Sec timeout*/
-
 
 
         telemetry.addData("Path", "Complete");
