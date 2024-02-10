@@ -15,15 +15,20 @@ there may also be buttons that will grab a pixel automatically and drops it off
 
 -------------------------------------------------------------------------
 Things I need to do:
- Claw and arm test:
-  * PIDF arm extender and roation
-  
- Autonomous:
-  * Set the autonomous to do what they're supposed to do
- 
- Full Program:
-  * create a way so that you press one button
-    * it reaches out a grabs the pixel (this will be from the ground)
+ Full:
+* make arm and clawwork
+* test full mechanum
+* program suspension
+* lancher servo
+
+Double check:
+* mechanum
+* arm
+* claw
+* autonomous
+
+  * create a way so that you press one button 
+    * it reaches out a grabs the pixel (this will be from the ground) 
     * it deposits the pixel onto the backboard 
     * it hangs?
     * it shoots the airplane?

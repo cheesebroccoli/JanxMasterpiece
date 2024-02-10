@@ -26,7 +26,7 @@ public class autoCode extends LinearOpMode {
     private DcMotorEx turn;
     private DcMotorEx ext;
 
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -118,22 +118,28 @@ public class autoCode extends LinearOpMode {
             // Determine new target position, and pass to motor controller
             newLeftTarget = (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition())/2 + (int)(leftInches * COUNTS_PER_INCH);
             newRightTarget = (backRight.getCurrentPosition() + frontRight.getCurrentPosition())/2 + (int)(rightInches * COUNTS_PER_INCH);
-            backLeft.setTargetPosition(newLeftTarget);
+
             frontLeft.setTargetPosition(newLeftTarget);
             backRight.setTargetPosition(newRightTarget);
+            frontLeft.setPower(Math.abs(speed));
+            backRight.setPower(Math.abs(speed));
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             frontRight.setTargetPosition(newRightTarget);
+            backLeft.setTargetPosition(newLeftTarget);
 
             // Turn On RUN_TO_POSITION
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
+            frontLeft.setPower(Math.abs(speed));
             backRight.setPower(Math.abs(speed));
             frontRight.setPower(Math.abs(speed));
-            frontLeft.setPower(Math.abs(speed));
             backLeft.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
@@ -142,6 +148,7 @@ public class autoCode extends LinearOpMode {
             // always end the motion as soon as possible.
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
+
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
                    (frontRight.isBusy() && frontLeft.isBusy())) {
@@ -158,17 +165,25 @@ public class autoCode extends LinearOpMode {
 
             // Stop all motion;
             backRight.setPower(0);
-            frontRight.setPower(0);
             frontLeft.setPower(0);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            frontRight.setPower(0);
+
             backLeft.setPower(0);
 
             // Turn off RUN_TO_POSITION
             backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
         }
+    }
+    public void moveClaw(){
+        //reach out arm
+        //move claws out.
     }
 }

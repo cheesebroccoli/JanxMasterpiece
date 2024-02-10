@@ -41,7 +41,7 @@ public class ClawAndArmTest extends LinearOpMode {
             while (opModeIsActive()) {
 //                clawLeft.setPosition(1);
 //                clawRight.setPosition(0);
-                claw(gamepad2.left_stick_x);
+                claw();
                 arm();
                 telemetry.addData("inputActually",gamepad2.left_stick_y);
                 telemetry.addData("NodderPos",nodder.getPosition());
@@ -63,12 +63,12 @@ public class ClawAndArmTest extends LinearOpMode {
         screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
         screwRight.setPower(0);
 
-        if(gamepad2.right_bumper){
+        if(gamepad2.left_trigger!=0){
             //up
            screwLeft.setPower(1);
            screwRight.setPower(1);
         }
-        else if(gamepad2.left_bumper){
+        else if(gamepad2.right_trigger!=0){
 
             screwLeft.setPower(-1);
             screwRight.setPower(-1);
@@ -80,7 +80,7 @@ public class ClawAndArmTest extends LinearOpMode {
     }
 
     /**claw- Gamepad2 left stick**/
-    private void claw(double input){
+    private void claw(){
         /**the claw nodder**/
         double y = .1;
         double x = Math.pow(gamepad2.left_stick_y,3);
@@ -91,38 +91,23 @@ public class ClawAndArmTest extends LinearOpMode {
             nodder.setPosition(nodder.getPosition()-y);
         }
         //opens and closes claw
-        telemetry.addData("input: ",input);
-        /**input:gamepad2.left_stick_x, by the by**/
-            if(input>0){
-                //Left:open
-              clawLeft.setPosition(clawLeft.getPosition()-power);
-              clawRight.setPosition(clawRight.getPosition()+power);
-            }
-            else if(input<0){
-                //right:close
-                clawLeft.setPosition(clawLeft.getPosition()+power);
-                clawRight.setPosition(clawRight.getPosition()-power);
-            }
-        else {
-            //setpositions.
-            if (gamepad2.y) {
-                /** move to 0 degrees.
-                //fully closed**/
-                clawLeft.setPosition(0);
-                clawRight.setPosition(1);
-                nodder.setPosition(0);
-            } else if (gamepad2.x || gamepad2.b) {
-                /** move to 90 degrees.**/
-                clawLeft.setPosition(0.5);
-                clawRight.setPosition(0.5);
-                nodder.setPosition(.5);
-            } else if (gamepad2.a) {
-                /** move to 180 degrees.
-                //fully open**/
-                clawLeft.setPosition(1);
-                clawRight.setPosition(0);
-                nodder.setPosition(1);
-            }
+        if(gamepad2.left_bumper){
+            clawLeft.setPosition(clawLeft.getPosition()+power);
+            clawRight.setPosition(clawRight.getPosition()-power);
+//            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
+//                clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//                clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//            }
+
+        }
+        if(gamepad2.right_bumper){
+            clawLeft.setPosition(clawLeft.getPosition()-power);
+            clawRight.setPosition(clawRight.getPosition()+power);
+//            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
+//                clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//                clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//            }
+
         }
     }
     /**arm- Gamepad2 right stick**/
@@ -130,11 +115,11 @@ public class ClawAndArmTest extends LinearOpMode {
     private void arm(){
         rotater.setTargetPositionTolerance(10);
         /**Right stick y (extender)**/
-        if(gamepad2.right_stick_y>0){
+        if(gamepad2.dpad_up){
             /**goes up**/
             extender.setPower(1);
         }
-        else if(gamepad2.right_stick_y<0){
+        else if(gamepad2.dpad_down){
             /**goes down**/
             extender.setPower(-1);
         }
@@ -142,11 +127,11 @@ public class ClawAndArmTest extends LinearOpMode {
             extender.setPower(0);
         }
         /**Right stick x (turn)**/
-        if(gamepad2.dpad_down){
+        if(gamepad2.right_stick_y>0){
             /**goes left?**/
             rotater.setTargetPosition(rotater.getCurrentPosition()+5);
         }
-        else if(gamepad2.dpad_up){
+        else if(gamepad2.right_stick_y<0){
             /**goes right?**/
             rotater.setTargetPosition(rotater.getCurrentPosition()-5);
         }
