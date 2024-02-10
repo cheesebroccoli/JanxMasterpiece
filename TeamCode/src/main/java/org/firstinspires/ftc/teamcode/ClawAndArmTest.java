@@ -42,10 +42,16 @@ public class ClawAndArmTest extends LinearOpMode {
 //                clawRight.setPosition(0);
                 claw();
                 arm();
+                log_stuff();
                 telemetry.addData("left",clawLeft.getPosition());
                 telemetry.addData("right",clawRight.getPosition());
             }
         }
+    }
+    private void log_stuff() {
+        telemetry.addData("arm", rotater.getCurrentPosition());
+        telemetry.addData("nodder", nodder.getPosition());
+
     }
     private void lift(){
         screwLeft  = hardwareMap.get(DcMotorEx.class, "ScrewLeft");
