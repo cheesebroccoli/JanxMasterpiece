@@ -123,7 +123,12 @@ public class ClawAndArmTest extends LinearOpMode {
     }
     /**arm- Gamepad2 right stick**/
     //need to add pidf!
+    int _lastPosition = 0;
     private void arm(){
+        // for debug
+        int _currentPosition = rotater.getCurrentPosition();
+        if(_currentPosition != _lastPosition) telemetry.addData("rotaté", _currentPosition);
+        _lastPosition = _currentPosition;
         /**Right stick y (extender)**/
         if(gamepad2.right_stick_y>0){
             /**goes up**/
