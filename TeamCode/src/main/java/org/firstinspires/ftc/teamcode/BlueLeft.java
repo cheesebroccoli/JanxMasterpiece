@@ -7,10 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="BlueLeft", group="PushBot")
-
-public class BlueLeft extends LinearOpMode {
-
+@Autonomous(name = "BlueRight", group = "PushBot")
+/**YELLOW**/
+public class BlueLeft extends LinearOpMode{
     /* Declare OpMode members. */
     private Servo lc;
     private Servo rc;
@@ -25,7 +24,7 @@ public class BlueLeft extends LinearOpMode {
     private DcMotorEx turn;
     private DcMotorEx ext;
 
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -37,7 +36,7 @@ public class BlueLeft extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 20.0 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1.0;
     static final double     TURN_SPEED              = 0.9;
 
@@ -90,10 +89,13 @@ public class BlueLeft extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        closeClaw();
-        openClaw();
-        upArm();
-        downArm();
+        encoderDrive(DRIVE_SPEED,6,6,4);
+        encoderDrive(TURN_SPEED,1,4,3);
+        encoderDrive(DRIVE_SPEED,3,3,3);
+        encoderDrive(TURN_SPEED,1,4,3);
+        encoderDrive(DRIVE_SPEED,5,5,5);
+        encoderDrive(TURN_SPEED,4,1,2);
+        encoderDrive(DRIVE_SPEED,2,2,2);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -120,41 +122,6 @@ public class BlueLeft extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
-    public void closeClaw(){
-        lc.setPosition(0);
-        rc.setPosition(1);
-    }
-
-    public void openClaw(){
-        lc.setPosition(1);
-        rc.setPosition(0);
-    }
-
-    public void upArm(){
-        if(opModeIsActive()){
-            while(runtime.seconds()<3) {
-                rotater.setPower(1);
-                extender.setPower(1);
-            }
-            extender.setPower(0);
-        }
-    }
-    public void downArm(){
-        if(opModeIsActive()){
-            while(opModeIsActive()&&(runtime.seconds()<3)) {
-                rotater.setPower(-1);
-            }
-        }
-    }
-    public void extender(){
-        if(opModeIsActive()){
-            while(opModeIsActive()&&(runtime.seconds()<3)){
-                extender.setPower(1);
-            }
-            extender.setPower(0);
-            runtime.reset();
-        }
-    }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -192,8 +159,8 @@ public class BlueLeft extends LinearOpMode {
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (frontRight.isBusy() && frontLeft.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (frontRight.isBusy() && frontLeft.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d", newLeftTarget,  newRightTarget);
@@ -220,4 +187,5 @@ public class BlueLeft extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
+
 }
