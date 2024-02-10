@@ -116,6 +116,10 @@ public class teleop extends OpMode {
 //            rotator.setPower(-1);
             rotator.setTargetPosition(rotator.getCurrentPosition()-5);
         }
+        else{
+            rotator.setTargetPosition(rotator.getCurrentPosition());
+        }
+        rotator.setPower(1);
 //        else {
 //            rotator.setPower(0);
         //}

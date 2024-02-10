@@ -88,7 +88,8 @@ public class RedLeft extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        encoderDrive(DRIVE_SPEED,2,2,5)
+        encoderDrive(DRIVE_SPEED,6,6,5);
+        encoderDrive();
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
