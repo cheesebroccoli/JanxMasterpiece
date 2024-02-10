@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.util.Range.clip;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,10 +19,10 @@ public class BlueLeft extends LinearOpMode{
     private DcMotorEx extender;
 
     private DcMotorEx rotater;
-    private DcMotor frontRight;
-    private DcMotor backRight;
-    private DcMotor frontLeft;
-    private DcMotor backLeft;
+    private DcMotorEx frontRight;
+    private DcMotorEx backRight;
+    private DcMotorEx frontLeft;
+    private DcMotorEx backLeft;
     private DcMotorEx turn;
     private DcMotorEx ext;
 
@@ -37,8 +39,8 @@ public class BlueLeft extends LinearOpMode{
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 3.0;
-    static final double     TURN_SPEED              = 2.8;
+    static final double     DRIVE_SPEED             = 1600.0;
+    static final double     TURN_SPEED              = 800.8;
 
     @Override
     public void runOpMode() {
@@ -78,7 +80,6 @@ public class BlueLeft extends LinearOpMode{
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Starting at",  "%7d :%7d",
                 frontLeft.getCurrentPosition(),
@@ -124,6 +125,13 @@ public class BlueLeft extends LinearOpMode{
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
+//    public  void drive(double ly, double lx, double rx){
+//        int Speed = 1300;
+//        frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
+//        frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
+//        backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
+//        backLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
+//    }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -163,6 +171,8 @@ public class BlueLeft extends LinearOpMode{
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
                     (frontRight.isBusy() && frontLeft.isBusy())) {
+                telemetry.addData("targetL",newLeftTarget);
+                telemetry.addData("targetR", newRightTarget);
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d", newLeftTarget,  newRightTarget);
