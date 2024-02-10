@@ -30,7 +30,8 @@ public class ClawAndArmTest extends LinearOpMode {
         janx.clawInit("clawLeft","clawRight","nodder");
         clawLeft  = hardwareMap.get(Servo.class,"clawLeft");
         clawRight = hardwareMap.get(Servo.class,"clawRight");
-        nodder    = hardwareMap.get(Servo.class,"nodder");extender = janx.ext;
+        nodder    = hardwareMap.get(Servo.class,"nodder");
+        extender = janx.ext;
         rotater   = janx.turn;
 //        clawRight = hardwareMap.get(Servo.class,"clawRight");
 //        nodder = hardwareMap.get(Servo.class,"vertical");
@@ -100,8 +101,8 @@ public class ClawAndArmTest extends LinearOpMode {
 
         }
         if(gamepad2.right_bumper){
-            clawLeft.setPosition(0);
-            clawRight.setPosition(1);
+            clawLeft.setPosition(1);
+            clawRight.setPosition(0);
 //            clawLeft.setPosition(clawLeft.getPosition()-power);
 //            clawRight.setPosition(clawRight.getPosition()+power);
 //            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
