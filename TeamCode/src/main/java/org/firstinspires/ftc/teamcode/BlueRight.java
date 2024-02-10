@@ -7,10 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="BlueLeft", group="PushBot")
+@Autonomous(name = "BlueRight", group = "PushBot")
 
-public class BlueLeft extends LinearOpMode {
-
+public class BlueRight extends LinearOpMode{
     /* Declare OpMode members. */
     private Servo lc;
     private Servo rc;
@@ -25,7 +24,7 @@ public class BlueLeft extends LinearOpMode {
     private DcMotorEx turn;
     private DcMotorEx ext;
 
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -37,7 +36,7 @@ public class BlueLeft extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 20.0 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1.0;
     static final double     TURN_SPEED              = 0.9;
 
@@ -116,9 +115,6 @@ public class BlueLeft extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
-    public void moveClaw(){
-
-    }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -156,8 +152,8 @@ public class BlueLeft extends LinearOpMode {
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (frontRight.isBusy() && frontLeft.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (frontRight.isBusy() && frontLeft.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to",  " %7d :%7d", newLeftTarget,  newRightTarget);
@@ -184,4 +180,5 @@ public class BlueLeft extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
+
 }

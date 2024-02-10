@@ -54,7 +54,7 @@ public class teleop extends OpMode {
         telemetry.addData("Y", gamepad1.left_stick_y);
         telemetry.addData("X", gamepad1.left_stick_x);
         telemetry.update();
-        claw(gamepad2.left_stick_x);
+        claw();
         arm();
         telemetry.addData("inputActually",gamepad2.left_stick_y);
         telemetry.addData("NodderPos",nodder.getPosition());
@@ -82,10 +82,40 @@ public class teleop extends OpMode {
             backRight.setVelocity(0);
         }
     }
-    private void claw(double input){
+    private void arm() {
+        rotater.setTargetPositionTolerance(10);
+        /**Right stick y (extender)**/
+        if(gamepad2.dpad_up){
+            /**goes up**/
+            extender.setPower(1);
+        }
+        else if(gamepad2.dpad_down){
+            /**goes down**/
+            extender.setPower(-1);
+        }
+        else{
+            extender.setPower(0);
+        }
+        /**Right stick x (turn)**/
+        if(gamepad2.right_stick_y>0){
+            /**goes left?**/
+            rotater.setPower(1);
+            //rotater.setTargetPosition(rotater.getCurrentPosition()+5);
+        }
+        else if(gamepad2.right_stick_y<0){
+            /**goes right?**/
+            rotater.setPower(-1);
+            //rotater.setTargetPosition(rotater.getCurrentPosition()-5);
+        }
+        else{
+            rotater.setPower(0);
+        }
+
+    }
+    private void claw(){
         /**the claw nodder**/
-        double y = .1;
-        double x = Math.pow(gamepad2.left_stick_y,3);
+        double y = .001;
+        double x =gamepad2.left_stick_y;
         if(x>0){
             nodder.setPosition(nodder.getPosition()+y);
         }
@@ -93,24 +123,66 @@ public class teleop extends OpMode {
             nodder.setPosition(nodder.getPosition()-y);
         }
         //opens and closes claw
-        telemetry.addData("input: ",input);
-        /**input:gamepad2.left_stick_x, by the by**/
-        if(input>0){
-            //Left:open
-            clawLeft.setPosition(clawLeft.getPosition()-power);
-            clawRight.setPosition(clawRight.getPosition()+power);
-        }
-        else if(input<0){
-            //right:close
+        if(gamepad2.left_bumper){
+//            clawLeft.setPosition(0);
+//            clawRight.setPosition(1);
             clawLeft.setPosition(clawLeft.getPosition()+power);
             clawRight.setPosition(clawRight.getPosition()-power);
+            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
+                clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition())/2);
+                clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition())/2);
+          }
+
         }
-        else
-        {
+        if(gamepad2.right_bumper){
+//            clawLeft.setPosition(1);
+//            clawRight.setPosition(0);
+            clawLeft.setPosition(clawLeft.getPosition()-power);
+            clawRight.setPosition(clawRight.getPosition()+power);
+            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
+                clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition())/2);
+                clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition())/2);
+            }
+
         }
-    }
-    private void arm(){
+            if(gamepad2.y){
+                clawLeft.setPosition(1);
+                clawRight.setPosition(0);
+            }
+            else if(gamepad2.a){
+                clawLeft.setPosition(0);
+                clawRight.setPosition(1);
+            }
+
+       }
+
+//    private void claw(double input){
+//        /**the claw nodder**/
+//        double y = .1;
+//        double x = Math.pow(gamepad2.left_stick_y,3);
+//        if(x>0){
+//            nodder.setPosition(nodder.getPosition()+y);
+//        }
+//        else if(x<0){
+//            nodder.setPosition(nodder.getPosition()-y);
+//        }
+//        //opens and closes claw
+//        telemetry.addData("input: ",input);
+//        /**input:gamepad2.left_stick_x, by the by**/
+//        if(input>0){
+//            //Left:open
+//            clawLeft.setPosition(clawLeft.getPosition()-power);
+//            clawRight.setPosition(clawRight.getPosition()+power);
+//        }
+//        else if(input<0){
+//            //right:close
+//            clawLeft.setPosition(clawLeft.getPosition()+power);
+//            clawRight.setPosition(clawRight.getPosition()-power);
+//        }
+//        else
+//        {
+//        }
+//    }
 
 
-    }
 }
