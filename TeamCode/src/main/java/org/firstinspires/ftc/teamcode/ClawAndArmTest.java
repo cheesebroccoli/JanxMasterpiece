@@ -33,8 +33,6 @@ public class ClawAndArmTest extends LinearOpMode {
         nodder    = hardwareMap.get(Servo.class,"nodder");
         extender = janx.ext;
         rotater   = janx.turn;
-//        clawRight = hardwareMap.get(Servo.class,"clawRight");
-//        nodder = hardwareMap.get(Servo.class,"vertical");
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
@@ -44,6 +42,8 @@ public class ClawAndArmTest extends LinearOpMode {
 //                clawRight.setPosition(0);
                 claw();
                 arm();
+                telemetry.addData("left",clawLeft.getPosition());
+                telemetry.addData("right",clawRight.getPosition());
             }
         }
     }
@@ -131,11 +131,13 @@ public class ClawAndArmTest extends LinearOpMode {
         /**Right stick x (turn)**/
         if(gamepad2.right_stick_y>0){
             /**goes left?**/
-            rotater.setTargetPosition(rotater.getCurrentPosition()+5);
+            rotater.setPower(1);
+            //rotater.setTargetPosition(rotater.getCurrentPosition()+5);
         }
         else if(gamepad2.right_stick_y<0){
             /**goes right?**/
-            rotater.setTargetPosition(rotater.getCurrentPosition()-5);
+            rotater.setPower(-1);
+            //rotater.setTargetPosition(rotater.getCurrentPosition()-5);
         }
         else{
             rotater.setPower(0);
