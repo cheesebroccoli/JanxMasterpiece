@@ -20,6 +20,9 @@ public class teleop extends OpMode {
 
     private DcMotorEx rotater;
 
+    private DcMotorEx screwRight;
+    private DcMotorEx screwLeft;
+
     double power = .005;
     @Override
     public void init() {
@@ -29,12 +32,15 @@ public class teleop extends OpMode {
         frontRight = janx.fr;
         backRight =  janx.br;
         backLeft =   janx.bl;
-        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+        janx.armInit("armExtension","arm rotations","ScrewLeft","ScrewRight");
+        extender  = janx.ext;
+        rotater   = janx.turn;
+        screwRight = janx.sr;
+        screwLeft = janx.sl;
+        janx.clawInit("clawLeft","clawRight","nodder");
         clawLeft  = janx.lc;
         clawRight = janx.rc;
         nodder    = janx.nod;
-        extender  = janx.ext;
-        rotater   = janx.turn;
     }
 
     @Override

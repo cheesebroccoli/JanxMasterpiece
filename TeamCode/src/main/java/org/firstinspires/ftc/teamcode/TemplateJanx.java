@@ -22,6 +22,9 @@ public class TemplateJanx {
     public DcMotorEx ext= null;
     public DcMotorEx turn = null;
 
+    public DcMotorEx sl = null;
+    public DcMotorEx sr = null;
+
     HardwareMap hwMap = null;
 
 
@@ -60,22 +63,32 @@ public class TemplateJanx {
         fr.setPower(0);
     }
 
-    public void armInit(String leftClaw, String rightClaw, String nodder, String armextend, String armTurn){
-        ext = hwMap.get(DcMotorEx.class,armextend);
-        turn = hwMap.get(DcMotorEx.class,armTurn);
+    public void clawInit(String leftClaw, String rightClaw, String nodder){
         nod = hwMap.get(Servo.class,nodder);
         lc  = hwMap.get(Servo.class, leftClaw);
         rc  = hwMap.get(Servo.class,rightClaw);
-
+    }
+    public void armInit(String armextend, String armTurn, String left, String right){
+        sl  = hwMap.get(DcMotorEx.class, left);
+        sr  = hwMap.get(DcMotorEx.class,right);
+        ext = hwMap.get(DcMotorEx.class,armextend);
+        turn = hwMap.get(DcMotorEx.class,armTurn);
         ext.setDirection(DcMotor.Direction.FORWARD);
         ext.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-       ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ext.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ext.setPower(0);
         turn.setDirection(DcMotor.Direction.FORWARD);
         turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         turn.setPower(0);
-
+        sl.setDirection(DcMotor.Direction.FORWARD);
+        sl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sl.setPower(0);
+        sr.setDirection(DcMotor.Direction.FORWARD);
+        sr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        sr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sr.setPower(0);
     }
  public void forward(long time) throws InterruptedException {
         turnOn(1);
