@@ -90,6 +90,10 @@ public class BlueLeft extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        closeClaw();
+        openClaw();
+        upArm();
+        downArm();
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -116,8 +120,40 @@ public class BlueLeft extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
-    public void moveClaw(){
+    public void closeClaw(){
+        lc.setPosition(0);
+        rc.setPosition(1);
+    }
 
+    public void openClaw(){
+        lc.setPosition(1);
+        rc.setPosition(0);
+    }
+
+    public void upArm(){
+        if(opModeIsActive()){
+            while(runtime.seconds()<3) {
+                rotater.setPower(1);
+                extender.setPower(1);
+            }
+            extender.setPower(0);
+        }
+    }
+    public void downArm(){
+        if(opModeIsActive()){
+            while(opModeIsActive()&&(runtime.seconds()<3)) {
+                rotater.setPower(-1);
+            }
+        }
+    }
+    public void extender(){
+        if(opModeIsActive()){
+            while(opModeIsActive()&&(runtime.seconds()<3)){
+                extender.setPower(1);
+            }
+            extender.setPower(0);
+            runtime.reset();
+        }
     }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,

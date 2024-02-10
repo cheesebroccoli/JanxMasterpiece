@@ -67,13 +67,13 @@ public class ClawAndArmTest extends LinearOpMode {
         //opens and closes claw
         if(gamepad2.left_bumper){
            clawLeft.setPosition(0);
-            clawRight.setPosition(1);
-//            clawLeft.setPosition(clawLeft.getPosition()+power);
-//            clawRight.setPosition(clawRight.getPosition()-power);
-//            if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
-//                clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
-//                clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
-//            }
+           clawRight.setPosition(1);
+//         clawLeft.setPosition(clawLeft.getPosition()+power);
+//         clawRight.setPosition(clawRight.getPosition()-power);
+//         if(Math.abs(clawLeft.getPosition())!=Math.abs(clawRight.getPosition())){
+//              clawLeft.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//              clawRight.setPosition((clawLeft.getPosition()+clawRight.getPosition()/2);
+//         }
 
         }
         if(gamepad2.right_bumper){
@@ -109,12 +109,12 @@ public class ClawAndArmTest extends LinearOpMode {
         if(gamepad2.right_stick_y>0){
             /**goes left?**/
             rotater.setPower(1);
-            //rotater.setTargetPosition(rotater.getCurrentPosition()+5);
+            rotater.setTargetPosition(rotater.getCurrentPosition()+5);
         }
         else if(gamepad2.right_stick_y<0){
             /**goes right?**/
             rotater.setPower(-1);
-            //rotater.setTargetPosition(rotater.getCurrentPosition()-5);
+            rotater.setTargetPosition(rotater.getCurrentPosition()-5);
         }
         else{
             rotater.setPower(0);
