@@ -33,6 +33,7 @@ public class ClawAndArmTest extends LinearOpMode {
         nodder    = hardwareMap.get(Servo.class,"nodder");
         extender = janx.ext;
         rotater   = janx.turn;
+
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
@@ -42,16 +43,13 @@ public class ClawAndArmTest extends LinearOpMode {
 //                clawRight.setPosition(0);
                 claw();
                 arm();
-                log_stuff();
+                telemetry.addData("arm", rotater.getCurrentPosition());
+                telemetry.addData("nodder", nodder.getPosition());
                 telemetry.addData("left",clawLeft.getPosition());
                 telemetry.addData("right",clawRight.getPosition());
+                telemetry.update();
             }
         }
-    }
-    private void log_stuff() {
-        telemetry.addData("arm", rotater.getCurrentPosition());
-        telemetry.addData("nodder", nodder.getPosition());
-
     }
     private void lift(){
         screwLeft  = hardwareMap.get(DcMotorEx.class, "ScrewLeft");
@@ -121,6 +119,7 @@ public class ClawAndArmTest extends LinearOpMode {
     /**arm- Gamepad2 right stick**/
     //need to add pidf!
     private void arm(){
+        rotater.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotater.setTargetPositionTolerance(10);
         /**Right stick y (extender)**/
         if(gamepad2.dpad_up){
@@ -148,7 +147,7 @@ public class ClawAndArmTest extends LinearOpMode {
         else{
             rotater.setPower(0);
         }
-
+        rotater.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
     
 }
