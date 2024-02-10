@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.lang.Math;
+
 @TeleOp(name = "Claw")
 public class ClawAndArmTest extends LinearOpMode {
     private Servo clawLeft;
@@ -15,6 +17,8 @@ public class ClawAndArmTest extends LinearOpMode {
     private DcMotorEx rotater;
     private DcMotorEx screwLeft;
     private DcMotorEx screwRight;
+
+    private int tarPosition = 0;
 
     double power = .005;
     /**
@@ -32,24 +36,6 @@ public class ClawAndArmTest extends LinearOpMode {
         nodder    = janx.nod;
         extender  = janx.ext;
         rotater   = janx.turn;
-//        clawRight = hardwareMap.get(Servo.class,"clawRight");
-//        nodder = hardwareMap.get(Servo.class,"vertical");
-        waitForStart();
-        if (opModeIsActive()) {
-            // Put run blocks here.
-            //initialisations here
-            while (opModeIsActive()) {
-//                clawLeft.setPosition(1);
-//                clawRight.setPosition(0);
-                claw(gamepad2.left_stick_x);
-                arm();
-                telemetry.addData("inputActually",gamepad2.left_stick_y);
-                telemetry.addData("NodderPos",nodder.getPosition());
-                telemetry.update();
-            }
-        }
-    }
-    private void lift(){
         screwLeft  = hardwareMap.get(DcMotorEx.class, "ScrewLeft");
         screwRight  = hardwareMap.get(DcMotorEx.class,"ScrewRight");
         screwLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -62,7 +48,27 @@ public class ClawAndArmTest extends LinearOpMode {
         screwRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
         screwRight.setPower(0);
-
+        rotater.setTargetPosition(0);
+//        clawRight = hardwareMap.get(Servo.class,"clawRight");
+//        nodder = hardwareMap.get(Servo.class,"vertical");
+        waitForStart();
+        if (opModeIsActive()) {
+            // Put run blocks here.
+            //initialisations here
+            while (opModeIsActive()) {
+//                clawLeft.setPosition(1);
+//                clawRight.setPosition(0);
+                claw(gamepad2.left_stick_x);
+                arm();
+                lift();
+                rotater.setPower(gamepad1.right_stick_y);
+                telemetry.addData("current",rotater.getCurrentPosition());
+                telemetry.addData("targer",rotater.getTargetPosition());
+                telemetry.update();
+            }
+        }
+    }
+    private void lift(){
         if(gamepad2.right_bumper){
             //up
            screwLeft.setPower(1);
@@ -142,17 +148,24 @@ public class ClawAndArmTest extends LinearOpMode {
             extender.setPower(0);
         }
         /**Right stick x (turn)**/
-        if(gamepad2.dpad_down){
+        if(gamepad2.dpad_up){
             /**goes left?**/
-            rotater.setTargetPosition(rotater.getCurrentPosition()+5);
+            //rotater.setTargetPosition(rotater.getTargetPosition()+35);
+            rotater.setPower(1);//Math.min(1.2, 1 / (Math.pow(1.01, (Math.abs(rotater.getCurrentPosition())))))
+
         }
-        else if(gamepad2.dpad_up){
+        else if(gamepad2.dpad_down){
             /**goes right?**/
-            rotater.setTargetPosition(rotater.getCurrentPosition()-5);
+            //rotater.setTargetPosition(rotater.getTargetPosition()-35);
+            rotater.setPower(-1);//Math.min(1.2, 1 / (Math.pow(1.01, (Math.abs(rotater.getCurrentPosition())))))
+
         }
         else{
-            rotater.setPower(0);
-        }
+           // rotater.setTargetPosition(rotater.getTargetPosition());
+            rotater.setPower(0);//Math.min(1.2, 1 / (Math.pow(1.01, (Math.abs(rotater.getCurrentPosition())))))
 
+        }
+        //rotater.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        //rotater.setPower(1);//Math.min(1.2, 1 / (Math.pow(1.01, (Math.abs(rotater.getCurrentPosition())))))
     }
 }

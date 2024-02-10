@@ -77,8 +77,7 @@ public class TemplateJanx {
         turn.setPower(0);
 
     }
-
-    public void forward(long time) throws InterruptedException {
+ public void forward(long time) throws InterruptedException {
         turnOn(1);
         sleep(time);
         turnOff();
