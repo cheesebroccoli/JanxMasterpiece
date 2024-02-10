@@ -37,8 +37,8 @@ public class BlueLeft extends LinearOpMode{
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 1.0;
-    static final double     TURN_SPEED              = 0.9;
+    static final double     DRIVE_SPEED             = 3.0;
+    static final double     TURN_SPEED              = 2.8;
 
     @Override
     public void runOpMode() {
@@ -89,13 +89,15 @@ public class BlueLeft extends LinearOpMode{
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        encoderDrive(DRIVE_SPEED,6,6,4);
-        encoderDrive(TURN_SPEED,1,4,3);
-        encoderDrive(DRIVE_SPEED,3,3,3);
-        encoderDrive(TURN_SPEED,1,4,3);
-        encoderDrive(DRIVE_SPEED,5,5,5);
-        encoderDrive(TURN_SPEED,4,1,2);
-        encoderDrive(DRIVE_SPEED,2,2,2);
+        encoderDrive(DRIVE_SPEED,24,24,12);
+        encoderDrive(TURN_SPEED,32,32,24);
+        encoderDrive(DRIVE_SPEED,16,16,12);
+        //going left
+        encoderDrive(DRIVE_SPEED,1,132,12);
+        encoderDrive(DRIVE_SPEED,20,20,12);
+        encoderDrive(TURN_SPEED,20,1,12);
+        //turn right
+        encoderDrive(DRIVE_SPEED,10,10,12);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)

@@ -48,18 +48,19 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
         mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        telemetry.addData("Y", gamepad1.left_stick_y);
-        telemetry.addData("X", gamepad1.left_stick_x);
+        telemetry.addData("nod",nodder.getPosition());
+        telemetry.addData("left",clawLeft.getPosition());
+        telemetry.addData("right",clawRight.getPosition());
         telemetry.update();
         if (gamepad2.x) {
-            nodder.setPosition(1);
+//          //open
             clawLeft.setPosition(1);
             clawRight.setPosition(1);
         }
         if (gamepad2.b) {
-            nodder.setPosition(1);
-            clawLeft.setPosition(1);
-            clawRight.setPosition(1);
+            //close
+            clawLeft.setPosition(0);
+            clawRight.setPosition(0);
         }
         arm();
         lift();
@@ -97,6 +98,10 @@ public class teleop extends OpMode {
 //            /* goes down */
 //            extender.setPower(-1);
 //        } else {
+
+
+
+
 //            extender.setPower(0);
 //        }
 

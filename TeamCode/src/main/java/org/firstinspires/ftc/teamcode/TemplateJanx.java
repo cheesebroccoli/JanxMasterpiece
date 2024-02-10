@@ -81,7 +81,7 @@ public class TemplateJanx {
         turn.setDirection(DcMotor.Direction.FORWARD);
         turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turn.setPower(1);
+        turn.setPower(0);
 
         sl.setDirection(DcMotor.Direction.FORWARD);
         sl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
