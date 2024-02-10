@@ -51,35 +51,7 @@ public class ClawAndArmTest extends LinearOpMode {
             }
         }
     }
-    private void lift(){
-        screwLeft  = hardwareMap.get(DcMotorEx.class, "ScrewLeft");
-        screwRight  = hardwareMap.get(DcMotorEx.class,"ScrewRight");
-        screwLeft.setDirection(DcMotor.Direction.FORWARD);
-        screwLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        screwLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        screwLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
-        screwLeft.setPower(0);
-        screwRight.setDirection(DcMotor.Direction.FORWARD);
-        screwRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        screwRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        screwRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT); //should it be brake?
-        screwRight.setPower(0);
 
-        if(gamepad2.left_trigger!=0){
-            //up
-           screwLeft.setPower(1);
-           screwRight.setPower(1);
-        }
-        else if(gamepad2.right_trigger!=0){
-
-            screwLeft.setPower(-1);
-            screwRight.setPower(-1);
-        }
-        else{
-            screwLeft.setPower(0);
-            screwRight.setPower(0);
-        }
-    }
 
     /**claw- Gamepad2 left stick**/
     private void claw(){

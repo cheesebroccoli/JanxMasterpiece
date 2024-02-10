@@ -56,6 +56,7 @@ public class teleop extends OpMode {
         telemetry.update();
         claw();
         arm();
+        lift();
         telemetry.addData("inputActually",gamepad2.left_stick_y);
         telemetry.addData("NodderPos",nodder.getPosition());
         telemetry.update();    }
@@ -70,10 +71,10 @@ public class teleop extends OpMode {
         double rx = Math.pow(RSX,3);
         //is RSX backwards? I may need to fix the canva
         if(LSX != 0 || LSY != 0 || RSX != 0){
-            frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
-            frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
-            backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
-            backLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
+            frontRight.setVelocity(Speed*(clip((ly)-lx,-1,1)-rx));
+            frontLeft.setVelocity(Speed*(clip((ly)+lx,-1,1)+rx));
+            backRight.setVelocity(Speed*(clip((ly)+lx,-1,1)-rx));
+            backLeft.setVelocity(Speed*(clip((ly)-lx,-1,1)+rx));
         }
         else{
             frontLeft.setVelocity(0);
@@ -154,6 +155,20 @@ public class teleop extends OpMode {
                 clawRight.setPosition(1);
             }
 
+       }
+       private void lift(){
+        if(gamepad1.y){
+            screwLeft.setPower(1);
+            screwRight.setPower(1);
+        }
+        else if(gamepad1.a){
+            screwRight.setPower(-1);
+            screwLeft.setPower(-1);
+        }
+        else{
+            screwLeft.setPower(0);
+            screwRight.setPower(0);
+        }
        }
 
 //    private void claw(double input){
