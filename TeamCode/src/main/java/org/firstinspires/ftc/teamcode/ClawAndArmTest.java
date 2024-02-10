@@ -26,11 +26,11 @@ public class ClawAndArmTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
-        janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-        clawLeft  = janx.lc;
-        clawRight = janx.rc;
-        nodder    = janx.nod;
-        extender  = janx.ext;
+        janx.armInit("armExtension","arm rotations","ScrewLeft","ScrewRight");
+        janx.clawInit("clawLeft","clawRight","nodder");
+        clawLeft  = hardwareMap.get(Servo.class,"clawLeft");
+        clawRight = hardwareMap.get(Servo.class,"clawRight");
+        nodder    = hardwareMap.get(Servo.class,"nodder");extender = janx.ext;
         rotater   = janx.turn;
 //        clawRight = hardwareMap.get(Servo.class,"clawRight");
 //        nodder = hardwareMap.get(Servo.class,"vertical");
@@ -43,9 +43,6 @@ public class ClawAndArmTest extends LinearOpMode {
 //                clawRight.setPosition(0);
                 claw();
                 arm();
-                telemetry.addData("inputActually",gamepad2.left_stick_y);
-                telemetry.addData("NodderPos",nodder.getPosition());
-                telemetry.update();
             }
         }
     }
@@ -82,8 +79,8 @@ public class ClawAndArmTest extends LinearOpMode {
     /**claw- Gamepad2 left stick**/
     private void claw(){
         /**the claw nodder**/
-        double y = .1;
-        double x = Math.pow(gamepad2.left_stick_y,3);
+        double y = .001;
+        double x =gamepad2.left_stick_y;
         if(x>0){
             nodder.setPosition(nodder.getPosition()+y);
         }
@@ -92,7 +89,7 @@ public class ClawAndArmTest extends LinearOpMode {
         }
         //opens and closes claw
         if(gamepad2.left_bumper){
-            clawLeft.setPosition(0);
+           clawLeft.setPosition(0);
             clawRight.setPosition(1);
 //            clawLeft.setPosition(clawLeft.getPosition()+power);
 //            clawRight.setPosition(clawRight.getPosition()-power);
