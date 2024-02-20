@@ -179,7 +179,4 @@ public class RedLeft extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
-    public static void (){
-
-    }
 }

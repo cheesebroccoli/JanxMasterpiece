@@ -43,6 +43,7 @@ public class teleop extends OpMode {
         clawLeft = janx.lc;
         clawRight = janx.rc;
         nodder = janx.nod;
+        rotator.setTargetPosition(rotator.getCurrentPosition());
     }
 
     @Override
@@ -145,7 +146,6 @@ public class teleop extends OpMode {
 
         }
         if (gamepad2.right_bumper) {
-//
             clawLeft.setPosition(clawLeft.getPosition() - power);
             clawRight.setPosition(clawRight.getPosition() - power);
 //            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
@@ -176,34 +176,5 @@ public class teleop extends OpMode {
             screwRight.setPower(0);
         }
     }
-
-//    private void claw(double input){
-//        /**the claw nodder**/
-//        double y = .1;
-//        double x = Math.pow(gamepad2.left_stick_y,3);
-//        if(x>0){
-//            nodder.setPosition(nodder.getPosition()+y);
-//        }
-//        else if(x<0){
-//            nodder.setPosition(nodder.getPosition()-y);
-//        }
-//        //opens and closes claw
-//        telemetry.addData("input: ",input);
-//        /**input:gamepad2.left_stick_x, by the by**/
-//        if(input>0){
-//            //Left:open
-//            clawLeft.setPosition(clawLeft.getPosition()-power);
-//            clawRight.setPosition(clawRight.getPosition()+power);
-//        }
-//        else if(input<0){
-//            //right:close
-//            clawLeft.setPosition(clawLeft.getPosition()+power);
-//            clawRight.setPosition(clawRight.getPosition()-power);
-//        }
-//        else
-//        {
-//        }
-//    }
-
 
 }
