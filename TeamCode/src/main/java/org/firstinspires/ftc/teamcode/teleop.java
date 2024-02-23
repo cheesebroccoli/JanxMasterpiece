@@ -97,22 +97,6 @@ public class teleop extends OpMode {
             rotator.setTargetPosition(180);
             rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        rotator.setPower(-1);
-//
-////        /* Right stick y (extender) */
-////        if (gamepad2.dpad_up) {
-////            /* goes up */
-////            extender.setPower(1);
-////        } else if (gamepad2.dpad_down) {
-////            /* goes down */
-////            extender.setPower(-1);
-////        } else {
-//
-//
-//
-//
-////            extender.setPower(0);
-////        }
         /* Right stick x (turn) */
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
@@ -132,15 +116,25 @@ public class teleop extends OpMode {
         rotator.setPower(1);
 
     }
+    private void setNodder(int desirePos){
+        nodder.setPosition(rotator.getCurrentPosition()+desirePos);
+    }
 
     private void claw() {
         /**the claw nodder**/
         double y = .001;
-        if (gamepad2.left_stick_y > 0) {
-            nodder.setPosition(nodder.getPosition() + y);
-        } else if (gamepad2.left_stick_y < 0) {
-            nodder.setPosition(nodder.getPosition() - y);
+        if(gamepad2.a){
+            setNodder(0);
         }
+        else{
+           
+        }
+//        else if (gamepad2.left_stick_y > 0) {
+//            nodder.setPosition(nodder.getPosition() + y);
+//        }
+//        else if (gamepad2.left_stick_y < 0) {
+//            nodder.setPosition(nodder.getPosition() - y);
+//        }
         //opens and closes claw
         if (gamepad2.left_bumper) {
             clawLeft.setPosition(clawLeft.getPosition() - power);
