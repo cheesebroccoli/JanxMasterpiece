@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -43,16 +44,17 @@ public class teleop extends OpMode {
         clawLeft = janx.lc;
         clawRight = janx.rc;
         nodder = janx.nod;
+        rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotator.setTargetPosition(rotator.getCurrentPosition());
     }
 
     @Override
     public void loop() {
         mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        telemetry.addData("nod",nodder.getPosition());
-        telemetry.addData("left",clawLeft.getPosition());
-        telemetry.addData("right",clawRight.getPosition());
-        telemetry.update();
+//        telemetry.addData("nod",nodder.getPosition());
+//        telemetry.addData("left",clawLeft.getPosition());
+//        telemetry.addData("right",clawRight.getPosition());
         if (gamepad2.x) {
 //          //open
             clawLeft.setPosition(1);
@@ -66,8 +68,8 @@ public class teleop extends OpMode {
         claw();
         arm();
         lift();
-        telemetry.addData("inputActually", gamepad2.left_stick_y);
-        telemetry.addData("NodderPos", nodder.getPosition());
+       telemetry.addData("rotater target",rotator.getTargetPosition());
+        telemetry.addData("rotater current",rotator.getCurrentPosition());
         telemetry.update();
     }
 
@@ -91,39 +93,43 @@ public class teleop extends OpMode {
     }
 
     private void arm() {
-        rotator.setTargetPositionTolerance(10);
-//        /* Right stick y (extender) */
-//        if (gamepad2.dpad_up) {
-//            /* goes up */
-//            extender.setPower(1);
-//        } else if (gamepad2.dpad_down) {
-//            /* goes down */
-//            extender.setPower(-1);
-//        } else {
-
-
-
-
-//            extender.setPower(0);
-//        }
-
+        if(gamepad2.right_stick_y!=0){
+            rotator.setTargetPosition(180);
+            rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        rotator.setPower(-1);
+//
+////        /* Right stick y (extender) */
+////        if (gamepad2.dpad_up) {
+////            /* goes up */
+////            extender.setPower(1);
+////        } else if (gamepad2.dpad_down) {
+////            /* goes down */
+////            extender.setPower(-1);
+////        } else {
+//
+//
+//
+//
+////            extender.setPower(0);
+////        }
         /* Right stick x (turn) */
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
+            rotator.setTargetPosition(rotator.getCurrentPosition()+35);
 //            rotator.setPower(1);
-            rotator.setTargetPosition(rotator.getCurrentPosition()+5);
-        } else if (gamepad2.right_stick_y < 0) {
+        }
+        else if (gamepad2.right_stick_y < 0) {
             /* goes right? */
 //            rotator.setPower(-1);
-            rotator.setTargetPosition(rotator.getCurrentPosition()-5);
+            rotator.setTargetPosition(rotator.getCurrentPosition()-35);
+
         }
         else{
             rotator.setTargetPosition(rotator.getCurrentPosition());
         }
+        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotator.setPower(1);
-//        else {
-//            rotator.setPower(0);
-        //}
 
     }
 

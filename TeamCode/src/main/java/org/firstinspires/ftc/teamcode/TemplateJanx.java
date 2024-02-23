@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import static java.lang.Thread.sleep;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -79,7 +81,6 @@ public class TemplateJanx {
 //        ext.setPower(0);
 
         turn.setDirection(DcMotor.Direction.FORWARD);
-        turn.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         turn.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         turn.setPower(0);
 
