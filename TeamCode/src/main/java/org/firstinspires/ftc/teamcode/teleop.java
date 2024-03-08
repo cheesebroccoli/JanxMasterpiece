@@ -66,8 +66,6 @@ public class teleop extends OpMode {
         claw();
         arm();
         lift();
-        telemetry.addData("inputActually", gamepad2.left_stick_y);
-        telemetry.addData("NodderPos", nodder.getPosition());
         telemetry.update();
     }
 
