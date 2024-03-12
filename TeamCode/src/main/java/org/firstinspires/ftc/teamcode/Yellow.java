@@ -52,7 +52,7 @@ public class Yellow extends LinearOpMode{
         encoderDrive(TURN_SPEED,-6,6,3);//4-left
         encoderDrive(DRIVE_SPEED,12,12,5);//5
         encoderDrive(TURN_SPEED,6,-6,3);//6 - right
-        encoderDrive(DRIVE_SPEED,5,5,3);7
+        encoderDrive(DRIVE_SPEED,5,5,3);
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);  // pause to display final telemetry message.

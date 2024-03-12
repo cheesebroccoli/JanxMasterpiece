@@ -48,10 +48,10 @@ public class Blue extends LinearOpMode{
         waitForStart();
 
         encoderDrive(DRIVE_SPEED,24,24,12); //1
-        encoderDrive(TURN_SPEED,32,-32,24); //2 (first turn- right)
+        encoderDrive(TURN_SPEED,16,-20,24); //2 (first turn- right)
         encoderDrive(DRIVE_SPEED,16,16,12); //3
         //going left
-        encoderDrive(TURN_SPEED,30,-30,12); //4 (second turn, right)
+        encoderDrive(TURN_SPEED,20,-20,12); //4 (second turn, right)
         encoderDrive(DRIVE_SPEED,20,20,12); //5
         encoderDrive(TURN_SPEED,-20,20,12); //6 (third turn, left)
         //turn right
@@ -69,6 +69,22 @@ public class Blue extends LinearOpMode{
      *  2) Move runs out of time
      *  3) Driver stops the OpMode running.
      */
+//    public void open(){
+//        //.setPosition()
+//     }
+
+//    public void close(){
+//        //.setPosition
+//    }
+
+    /*
+    how to move arm???????
+     */
+//    public void arm(int degrees){
+//       int target = degrees;
+//       rotater.setTargetPosition(target);
+//       rotater.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//    }
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
@@ -146,12 +162,12 @@ public class Blue extends LinearOpMode{
         backRight.setDirection(DcMotor.Direction.FORWARD);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        // janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
-        ext =       hardwareMap.get(DcMotorEx.class,"armExtension");
-        turn =      hardwareMap.get(DcMotorEx.class,"arm rotations");
-        nodder =    hardwareMap.get(Servo.class,"nodder");
-        lc  =       hardwareMap.get(Servo.class, "clawLeft");
-        rc  =       hardwareMap.get(Servo.class,"clawRight");
+//        // janx.armInit("clawLeft","clawRight","nodder","armExtension","arm rotations");
+//        ext =       hardwareMap.get(DcMotorEx.class,"armExtension");
+//        turn =      hardwareMap.get(DcMotorEx.class,"arm rotations");
+//        nodder =    hardwareMap.get(Servo.class,"nodder");
+//        lc  =       hardwareMap.get(Servo.class, "clawLeft");
+//        rc  =       hardwareMap.get(Servo.class,"clawRight");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
