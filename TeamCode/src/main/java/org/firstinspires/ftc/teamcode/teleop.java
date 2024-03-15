@@ -90,21 +90,6 @@ public class teleop extends OpMode {
 
     private void arm() {
         rotator.setTargetPositionTolerance(10);
-//        /* Right stick y (extender) */
-//        if (gamepad2.dpad_up) {
-//            /* goes up */
-//            extender.setPower(1);
-//        } else if (gamepad2.dpad_down) {
-//            /* goes down */
-//            extender.setPower(-1);
-//        } else {
-
-
-
-
-//            extender.setPower(0);
-//        }
-
         /* Right stick x (turn) */
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
