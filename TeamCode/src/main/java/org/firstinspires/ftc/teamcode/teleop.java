@@ -18,14 +18,13 @@ public class teleop extends OpMode {
     private Servo clawRight;
     private Servo nodder;
     private DcMotorEx extender;
-
     private DcMotorEx rotator;
-
     private DcMotorEx screwRight;
     private DcMotorEx screwLeft;
 
     double power = .005;
 
+    
     @Override
     public void init() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
@@ -107,10 +106,6 @@ public class teleop extends OpMode {
             rotator.setTargetPosition(rotator.getCurrentPosition());
         }
         rotator.setPower(1);
-//        else {
-//            rotator.setPower(0);
-        //}
-
     }
 
     private void claw() {
