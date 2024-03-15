@@ -21,7 +21,7 @@ public class ClawAndArmTest extends LinearOpMode {
      * TO DO:
      * Fix claw (wiring)
      * Get arm rotation to work
-     * set nodder to be be less intense
+     * set nodder to be lbe less intense
      */
     @Override
     public void runOpMode() {

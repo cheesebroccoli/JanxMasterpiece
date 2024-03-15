@@ -39,11 +39,13 @@ public class teleop extends OpMode {
         rotator = janx.turn;
         screwRight = janx.sr;
         screwLeft = janx.sl;
+
         janx.clawInit("clawLeft", "clawRight", "nodder");
         clawLeft = janx.lc;
         clawRight = janx.rc;
         nodder = janx.nod;
         rotator.setTargetPosition(rotator.getCurrentPosition());
+
     }
 
     @Override
@@ -90,21 +92,7 @@ public class teleop extends OpMode {
 
     private void arm() {
         rotator.setTargetPositionTolerance(10);
-//        /* Right stick y (extender) */
-//        if (gamepad2.dpad_up) {
-//            /* goes up */
-//            extender.setPower(1);
-//        } else if (gamepad2.dpad_down) {
-//            /* goes down */
-//            extender.setPower(-1);
-//        } else {
-
-
-
-
-//            extender.setPower(0);
-//        }
-
+//
         /* Right stick x (turn) */
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
@@ -128,7 +116,7 @@ public class teleop extends OpMode {
     private void claw() {
         /**the claw nodder**/
         double y = .001;
-        if (gamepad2.left_stick_y > 0) {
+        if (gamepad2.left_stick_y> 0) {
             nodder.setPosition(nodder.getPosition() + y);
         } else if (gamepad2.left_stick_y < 0) {
             nodder.setPosition(nodder.getPosition() - y);
@@ -163,13 +151,15 @@ public class teleop extends OpMode {
     }
 
     private void lift() {
-        if (gamepad1.y) {
+        if (gamepad2.y) {
             screwLeft.setPower(1);
             screwRight.setPower(1);
-        } else if (gamepad1.a) {
-            screwRight.setPower(-1);
+        }
+        else if (gamepad2.a) {
             screwLeft.setPower(-1);
-        } else {
+            screwRight.setPower(-1);
+        }
+        else{
             screwLeft.setPower(0);
             screwRight.setPower(0);
         }
