@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -43,6 +44,8 @@ public class teleop extends OpMode {
         clawLeft = janx.lc;
         clawRight = janx.rc;
         nodder = janx.nod;
+        rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rotator.setTargetPosition(rotator.getCurrentPosition());
 
     }
@@ -53,6 +56,8 @@ public class teleop extends OpMode {
         telemetry.addData("nod",nodder.getPosition());
         telemetry.addData("left",clawLeft.getPosition());
         telemetry.addData("right",clawRight.getPosition());
+        telemetry.addData("rot targ: ", rotator.getTargetPosition());
+        telemetry.addData("rot current:", rotator.getCurrentPosition());
         telemetry.update();
         if (gamepad2.x) {
 //          //open
@@ -90,57 +95,63 @@ public class teleop extends OpMode {
     }
 
     private void arm() {
-        rotator.setTargetPositionTolerance(10);
-//
-        /* Right stick x (turn) */
-        if (gamepad2.right_stick_y > 0) {
-            /* goes left? */
-//            rotator.setPower(1);
-            rotator.setTargetPosition(rotator.getCurrentPosition()+5);
-        } else if (gamepad2.right_stick_y < 0) {
-            /* goes right? */
-//            rotator.setPower(-1);
-            rotator.setTargetPosition(rotator.getCurrentPosition()-5);
-        }
-        else{
-            rotator.setTargetPosition(rotator.getCurrentPosition());
-        }
-        rotator.setPower(1);
+        rotator.setPower(Math.pow(gamepad2.right_stick_y,3));
+//        /* Right stick x (turn) */
+//        if (gamepad2.right_stick_y > 0) {
+//            /* goes left? */
+////            rotator.setPower(1);
+//            rotator.setTargetPosition(rotator.getCurrentPosition()+1);
+//        } else if (gamepad2.right_stick_y < 0) {
+//            /* goes right? */
+////            rotator.setPower(-1);
+//            rotator.setTargetPosition(rotator.getCurrentPosition()-1);
+//        }
+//        else{
+//            rotator.setTargetPosition(rotator.getCurrentPosition());
+//        }
+//        rotator.setPower(1);
+//        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     private void claw() {
         /**the claw nodder**/
         double y = .001;
-        if (gamepad2.left_stick_y> 0) {
-            nodder.setPosition(nodder.getPosition() + y);
-        } else if (gamepad2.left_stick_y < 0) {
-            nodder.setPosition(nodder.getPosition() - y);
-        }
-        //opens and closes claw
-        if (gamepad2.left_bumper) {
-            clawLeft.setPosition(clawLeft.getPosition() - power);
-            clawRight.setPosition(clawRight.getPosition() - power);
-//            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
-//                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-//                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-//            }
+        double p = .005;
 
-        }
-        if (gamepad2.right_bumper) {
-            clawLeft.setPosition(clawLeft.getPosition() - power);
-            clawRight.setPosition(clawRight.getPosition() - power);
-//            if (Math.abs(clawLeft.getPosition()) != Math.abs(clawRight.getPosition())) {
-//                clawLeft.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-//                clawRight.setPosition((clawLeft.getPosition() + clawRight.getPosition()) / 2);
-//            }
+            nodder.setPosition(nodder.getPosition());
 
-        }
-        if (gamepad2.y) {
-            clawLeft.setPosition(1);
-            clawRight.setPosition(0);
-        } else if (gamepad2.a) {
-            clawLeft.setPosition(0);
+            if (gamepad2.left_stick_y > 0) {
+                nodder.setPosition(nodder.getPosition() + y);
+            } else if (gamepad2.left_stick_y < 0) {
+                nodder.setPosition(nodder.getPosition() - y);
+            }
+
+            if (gamepad2.left_bumper){
+                /**close**/
+                clawLeft.setPosition(-1);
+            }
+            else if(gamepad2.left_trigger!=0){
+                /**open**/
+                clawLeft.setPosition(1);
+            }
+
+            if (gamepad2.right_bumper) {
+                /**close**/
+//                clawRight.setPosition(clawRight.getPosition()+p);
+                clawRight.setPosition(1);
+            }
+            else if(gamepad2.right_trigger!=0){
+                /**open**/
+//                clawRight.setPosition(clawRight.getPosition()-p);
+                clawRight.setPosition(-.8);
+            }
+
+        if (gamepad2.x) {
+            clawLeft.setPosition(-1);
             clawRight.setPosition(1);
+        } else if (gamepad2.b) {
+            clawLeft.setPosition(1);
+            clawRight.setPosition(-1);
         }
 
     }

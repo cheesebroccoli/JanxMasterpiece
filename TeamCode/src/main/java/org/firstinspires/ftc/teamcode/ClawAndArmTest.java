@@ -33,6 +33,7 @@ public class ClawAndArmTest extends LinearOpMode {
         nodder    = hardwareMap.get(Servo.class,"nodder");
         extender = janx.ext;
         rotater   = janx.turn;
+        rotater.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
         if (opModeIsActive()) {
@@ -41,17 +42,27 @@ public class ClawAndArmTest extends LinearOpMode {
             while (opModeIsActive()) {
 //                clawLeft.setPosition(1);
 //                clawRight.setPosition(0);
-                claw();
-                arm();
-                telemetry.addData("arm", rotater.getCurrentPosition());
-                telemetry.addData("nodder", nodder.getPosition());
-                telemetry.addData("left",clawLeft.getPosition());
-                telemetry.addData("right",clawRight.getPosition());
+                armTest();
+                telemetry.addData("arm current", rotater.getCurrentPosition());
+                telemetry.addData("arm target", rotater.getTargetPosition());
                 telemetry.update();
             }
         }
     }
 
+    private void armTest(){
+        rotater.setPower(Math.pow(gamepad2.right_stick_y,3));
+
+//        if(gamepad2.right_stick_y>0){
+//            rotater.setPower(1);
+//        }
+//        if(gamepad2.right_stick_y<0){
+//            rotater.setPower(-1);
+//        }
+//        else{
+//            rotater.setPower(0);
+//        }
+    }
 
     /**claw- Gamepad2 left stick**/
     private void claw(){
