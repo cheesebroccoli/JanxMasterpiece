@@ -23,7 +23,7 @@ public class teleop extends OpMode {
     private DcMotorEx screwRight;
     private DcMotorEx screwLeft;
     int target = 0;
-    double y = .005;
+    double y = .007;
     
     @Override
     public void init() {
@@ -100,11 +100,11 @@ public class teleop extends OpMode {
         //rotator.setPower(Math.pow(gamepad2.right_stick_y,3));
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
-            target += 1;
+            target += 3;
         }
         else if (gamepad2.right_stick_y < 0) {
             /* goes right? */
-            target -= 1;
+            target -= 3;
         }
         if(target<0){
             target = 0;
