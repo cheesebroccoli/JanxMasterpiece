@@ -23,6 +23,7 @@ public class teleop extends OpMode {
     private DcMotorEx screwRight;
     private DcMotorEx screwLeft;
     int target = 0;
+    double y = .005;
     
     @Override
     public void init() {
@@ -95,26 +96,27 @@ public class teleop extends OpMode {
     }
 
     private void arm() {
+        rotator.setTargetPositionTolerance(5);
         //rotator.setPower(Math.pow(gamepad2.right_stick_y,3));
         if (gamepad2.right_stick_y > 0) {
             /* goes left? */
-            target += 5;
+            target += 1;
         }
         else if (gamepad2.right_stick_y < 0) {
             /* goes right? */
-            target -= 5;
+            target -= 1;
         }
         if(target<0){
             target = 0;
+        }
+        if(gamepad2.right_stick_y ==0){
+            target = rotator.getCurrentPosition();
         }
         rotator.setTargetPosition(target);
     }
 
     private void claw() {
         /**the claw nodder**/
-        double y = .001;
-        double p = .005;
-
             if (gamepad2.left_stick_y > 0) {
                 nodder.setPosition(nodder.getPosition() + y);
             } else if (gamepad2.left_stick_y < 0) {
