@@ -19,7 +19,7 @@ public class TemplateJanx {
 
     public Servo lc = null;
     public Servo rc = null;
-    public Servo nod = null;
+    public DcMotorEx nod = null;
 
     public DcMotorEx ext = null;
     public DcMotorEx turn = null;
@@ -63,9 +63,9 @@ public class TemplateJanx {
         br.setPower(0);
         fr.setPower(0);
     }
-
+    
     public void clawInit(String leftClaw, String rightClaw, String nodder) {
-        nod = hwMap.get(Servo.class, nodder);
+        nod = hwMap.get(DcMotorEx.class, nodder);
         lc = hwMap.get(Servo.class, leftClaw);
         rc = hwMap.get(Servo.class, rightClaw);
     }

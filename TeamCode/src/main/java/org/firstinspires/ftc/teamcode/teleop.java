@@ -17,13 +17,13 @@ public class teleop extends OpMode {
     private DcMotorEx backLeft;
     private Servo clawLeft;
     private Servo clawRight;
-    private Servo nodder;
+    private DcMotorEx nodder;
     private DcMotorEx extender;
     private DcMotorEx rotator;
     private DcMotorEx screwRight;
     private DcMotorEx screwLeft;
     int target = 0;
-    double y = .007;
+    int y = 0;
     
     @Override
     public void init() {
@@ -48,31 +48,30 @@ public class teleop extends OpMode {
         rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rotator.setTargetPosition(0);
         rotator.setPower(1);
-        nodder.setPosition(nodder.getPosition());
+        nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        nodder.setTargetPosition(0);
+        nodder.setPower(1);
+        nodder.setVelocityPIDFCoefficients(10, 1, 0, 100);
+        nodder.setPositionPIDFCoefficients(5);
+        nodder.setTargetPositionTolerance(5);
     }
 
     @Override
     public void loop() {
         mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        telemetry.addData("nod",nodder.getPosition());
+        telemetry.addData("nod current",nodder.getCurrentPosition());
+        telemetry.addData("nod target",nodder.getTargetPosition());
         telemetry.addData("left",clawLeft.getPosition());
         telemetry.addData("right",clawRight.getPosition());
-        telemetry.addData("rot targ: ", rotator.getTargetPosition());
+        telemetry.addData("rot target: ", rotator.getTargetPosition());
         telemetry.addData("rot current:", rotator.getCurrentPosition());
         telemetry.update();
-        if (gamepad2.x) {
-//          //open
-            clawLeft.setPosition(1);
-            clawRight.setPosition(1);
-        }
-        if (gamepad2.b) {
-            //close
-            clawLeft.setPosition(0);
-            clawRight.setPosition(0);
-        }
         claw();
         arm();
         lift();
+        preset();
         telemetry.update();
     }
 
@@ -94,34 +93,38 @@ public class teleop extends OpMode {
             backRight.setVelocity(0);
         }
     }
-
     private void arm() {
         rotator.setTargetPositionTolerance(5);
         //rotator.setPower(Math.pow(gamepad2.right_stick_y,3));
-        if (gamepad2.right_stick_y > 0) {
-            /* goes left? */
-            target += 3;
+        if(!gamepad2.a||!gamepad2.y||!gamepad2.x||!gamepad2.b) {
+            if (gamepad2.right_stick_y > 0) {
+                /* goes left? */
+                target += 3;
+            } else if (gamepad2.right_stick_y < 0) {
+                /* goes right? */
+                target -= 3;
+            }
+            if (target < 0) {
+                target = 0;
+            }
+            if (gamepad2.right_stick_y == 0) {
+                target = rotator.getCurrentPosition();
+            }
+            rotator.setTargetPosition(target);
         }
-        else if (gamepad2.right_stick_y < 0) {
-            /* goes right? */
-            target -= 3;
-        }
-        if(target<0){
-            target = 0;
-        }
-        if(gamepad2.right_stick_y ==0){
-            target = rotator.getCurrentPosition();
-        }
-        rotator.setTargetPosition(target);
     }
-
     private void claw() {
         /**the claw nodder**/
             if (gamepad2.left_stick_y > 0) {
-                nodder.setPosition(nodder.getPosition() + y);
+                y+=2;
             } else if (gamepad2.left_stick_y < 0) {
-                nodder.setPosition(nodder.getPosition() - y);
+                y-=2;
             }
+            if(y<0){
+                y=0;
+            }
+            nodder .setVelocity(400);
+        nodder.setTargetPosition(y);
 
             if (gamepad2.right_bumper){
                 /**close**/
@@ -143,13 +146,12 @@ public class teleop extends OpMode {
                 clawRight.setPosition(-.8);
             }
     }
-
     private void lift() {
-        if (gamepad2.y) {
+        if (gamepad1.y) {
             screwLeft.setPower(1);
             screwRight.setPower(1);
         }
-        else if (gamepad2.a) {
+        else if (gamepad1.a) {
             screwLeft.setPower(-1);
             screwRight.setPower(-1);
         }
@@ -157,6 +159,32 @@ public class teleop extends OpMode {
             screwLeft.setPower(0);
             screwRight.setPower(0);
         }
+    }
+    public void preset(){
+        if(gamepad2.x){
+            //ground
+            y = 130;
+            target = 0;
+        }
+        else if(gamepad2.y){
+            //up
+            y = 150;
+            target = 479;
+        }
+        else if(gamepad2.a){
+            //down
+            y = 175;
+            target = 550;
+        }
+        else if(gamepad2.b){
+            //forward
+            y = 92;
+            target = 66;
+        }
+        nodder.setTargetPosition(y);
+        rotator.setTargetPosition(target);
+        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
 }
