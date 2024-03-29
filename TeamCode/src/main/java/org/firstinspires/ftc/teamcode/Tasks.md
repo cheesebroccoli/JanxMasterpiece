@@ -10,7 +10,7 @@ Bumpers-
 triggers-
     Y: Up lift
     A: down lift
-    B: 
+    B: Overide- arm
     X:
 D-Pad
     Up-

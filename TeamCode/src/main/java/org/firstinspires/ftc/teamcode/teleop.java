@@ -24,7 +24,7 @@ public class teleop extends OpMode {
     private DcMotorEx screwLeft;
     int target = 0;
     int y = 0;
-    
+
     @Override
     public void init() {
         TemplateJanx janx = new TemplateJanx(hardwareMap);
@@ -45,17 +45,21 @@ public class teleop extends OpMode {
         nodder = janx.nod;
         rotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rotator.setTargetPositionTolerance(2);
+        rotator.setVelocityPIDFCoefficients(10,1,0,100);
+        rotator.setPositionPIDFCoefficients(5);
         rotator.setTargetPosition(0);
-        rotator.setPower(1);
+        rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
         nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        nodder.setTargetPosition(0);
-        nodder.setPower(1);
-        nodder.setVelocityPIDFCoefficients(10, 1, 0, 100);
+        nodder.setTargetPositionTolerance(2);
+        nodder.setVelocityPIDFCoefficients(10,1,0,100);
         nodder.setPositionPIDFCoefficients(5);
-        nodder.setTargetPositionTolerance(5);
+        nodder.setTargetPosition(0);
+        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
     @Override
@@ -94,20 +98,22 @@ public class teleop extends OpMode {
         }
     }
     private void arm() {
-        rotator.setTargetPositionTolerance(5);
         //rotator.setPower(Math.pow(gamepad2.right_stick_y,3));
         if(!gamepad2.a||!gamepad2.y||!gamepad2.x||!gamepad2.b) {
             if (gamepad2.right_stick_y > 0) {
                 /* goes left? */
-                target += 3;
+                target += 6;
+                rotator.setVelocity(800);
             } else if (gamepad2.right_stick_y < 0) {
                 /* goes right? */
-                target -= 3;
+                target -= 6;
+                rotator.setVelocity(800);
             }
-            if (target < 0) {
-                target = 0;
-            }
-            if (gamepad2.right_stick_y == 0) {
+//            if (target < -10) {
+//                target = 0;
+//                rotator.setVelocity(0);
+//            }
+            if (gamepad2.right_stick_y == 0){
                 target = rotator.getCurrentPosition();
             }
             rotator.setTargetPosition(target);
@@ -117,14 +123,15 @@ public class teleop extends OpMode {
         /**the claw nodder**/
             if (gamepad2.left_stick_y > 0) {
                 y+=2;
+                nodder.setVelocity(200);
             } else if (gamepad2.left_stick_y < 0) {
                 y-=2;
+                nodder.setVelocity(100);
             }
-            if(y<0){
-                y=0;
+            else{
+                nodder.setVelocity(0);
             }
-            nodder .setVelocity(400);
-        nodder.setTargetPosition(y);
+            nodder.setTargetPosition(y);
 
             if (gamepad2.right_bumper){
                 /**close**/
@@ -161,25 +168,32 @@ public class teleop extends OpMode {
         }
     }
     public void preset(){
-        if(gamepad2.x){
-            //ground
-            y = 130;
-            target = 0;
+        if(gamepad1.b){
+            y = 0;
+            target = 328;
         }
-        else if(gamepad2.y){
-            //up
-            y = 150;
-            target = 479;
-        }
-        else if(gamepad2.a){
-            //down
-            y = 175;
-            target = 550;
-        }
-        else if(gamepad2.b){
-            //forward
-            y = 92;
-            target = 66;
+        else{
+            if(gamepad2.x){
+                //ground
+                y = -130;
+                target = 0;
+            }
+            else if(gamepad2.y){
+                //up
+                y = -150;
+                target = 479;
+            }
+            else if(gamepad2.a){
+                //down
+                y = -175;
+                target = 550;
+            }
+            else if(gamepad2.b){
+                //forward
+                y = -92;
+                target = 66;
+            }
+
         }
         nodder.setTargetPosition(y);
         rotator.setTargetPosition(target);
