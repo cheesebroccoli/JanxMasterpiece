@@ -51,14 +51,14 @@ public class teleop extends OpMode {
         rotator.setTargetPosition(0);
         rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-
-        nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        nodder.setTargetPositionTolerance(2);
-        nodder.setVelocityPIDFCoefficients(10,1,0,100);
-        nodder.setPositionPIDFCoefficients(5);
-        nodder.setTargetPosition(0);
-        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        nodder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        nodder.setTargetPositionTolerance(2);
+//        nodder.setVelocityPIDFCoefficients(4.96,0.496,0,49.6);
+//        nodder.setPositionPIDFCoefficients(5);
+//        nodder.setTargetPosition(0);
+//        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 
@@ -109,6 +109,9 @@ public class teleop extends OpMode {
                 target -= 6;
                 rotator.setVelocity(800);
             }
+            else{
+                rotator.setVelocity(0);
+            }
 //            if (target < -10) {
 //                target = 0;
 //                rotator.setVelocity(0);
@@ -121,17 +124,26 @@ public class teleop extends OpMode {
     }
     private void claw() {
         /**the claw nodder**/
-            if (gamepad2.left_stick_y > 0) {
-                y+=2;
-                nodder.setVelocity(200);
-            } else if (gamepad2.left_stick_y < 0) {
-                y-=2;
-                nodder.setVelocity(100);
-            }
-            else{
-                nodder.setVelocity(0);
-            }
-            nodder.setTargetPosition(y);
+        if(gamepad2.left_stick_y>0){
+            nodder.setPower(1);
+        }
+        else if(gamepad2.left_stick_y>0){
+            nodder.setPower(-1);
+        }
+        else{
+            nodder.setPower(0);
+        }
+//            if (gamepad2.left_stick_y > 0) {
+//                y+=2;
+//                nodder.setVelocity(200);
+//            } else if (gamepad2.left_stick_y < 0) {
+//                y-=2;
+//                nodder.setVelocity(100);
+//            }
+//            else{
+//                nodder.setVelocity(0);
+//            }
+//            nodder.setTargetPosition(y);
 
             if (gamepad2.right_bumper){
                 /**close**/
