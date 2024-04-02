@@ -51,12 +51,13 @@ public class teleop extends OpMode {
         rotator.setTargetPosition(0);
         rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        nodder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        nodder.setTargetPositionTolerance(2);
-//        nodder.setVelocityPIDFCoefficients(4.96,0.496,0,49.6);
-//        nodder.setPositionPIDFCoefficients(5);
+
+//        nodder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        nodder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        nodder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        nodder.setTargetPositionTolerance(2);
+        nodder.setVelocityPIDFCoefficients(4.96,0.496,0,49.6);
+        nodder.setPositionPIDFCoefficients(5);
 //        nodder.setTargetPosition(0);
 //        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -67,10 +68,7 @@ public class teleop extends OpMode {
         mecanum(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         telemetry.addData("nod current",nodder.getCurrentPosition());
         telemetry.addData("nod target",nodder.getTargetPosition());
-        telemetry.addData("left",clawLeft.getPosition());
-        telemetry.addData("right",clawRight.getPosition());
-        telemetry.addData("rot target: ", rotator.getTargetPosition());
-        telemetry.addData("rot current:", rotator.getCurrentPosition());
+        telemetry.addData("power",nodder.getPower());
         telemetry.update();
         claw();
         arm();
@@ -125,25 +123,14 @@ public class teleop extends OpMode {
     private void claw() {
         /**the claw nodder**/
         if(gamepad2.left_stick_y>0){
-            nodder.setPower(1);
+            y+=3;
         }
-        else if(gamepad2.left_stick_y>0){
-            nodder.setPower(-1);
+        if(gamepad2.left_stick_y<0){
+            y-=3;
         }
-        else{
-            nodder.setPower(0);
-        }
-//            if (gamepad2.left_stick_y > 0) {
-//                y+=2;
-//                nodder.setVelocity(200);
-//            } else if (gamepad2.left_stick_y < 0) {
-//                y-=2;
-//                nodder.setVelocity(100);
-//            }
-//            else{
-//                nodder.setVelocity(0);
-//            }
-//            nodder.setTargetPosition(y);
+        nodder.setPower(1);
+        nodder.setTargetPosition(y);
+        nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             if (gamepad2.right_bumper){
                 /**close**/
@@ -212,6 +199,20 @@ public class teleop extends OpMode {
         rotator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+
+//            if (gamepad2.left_stick_y > 0) {
+//                y+=5;
+////                nodder.setVelocity(200);
+//            } else if (gamepad2.left_stick_y < 0) {
+//                y-=5;
+////                nodder.setVelocity(100);
+//            }
+////            else{
+////                nodder.setVelocity(0);
+////            }
+//            nodder.setPower(1);
+//            nodder.setTargetPosition(y);
+//            nodder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 }
 

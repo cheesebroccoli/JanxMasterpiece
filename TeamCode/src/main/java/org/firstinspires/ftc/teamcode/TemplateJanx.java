@@ -67,8 +67,6 @@ public class TemplateJanx {
     public void clawInit(String leftClaw, String rightClaw, String nodder) {
         nod = hwMap.get(DcMotorEx.class, nodder);
         nod.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        nod.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        nod.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         nod.setDirection(DcMotor.Direction.FORWARD);
         lc = hwMap.get(Servo.class, leftClaw);
         rc = hwMap.get(Servo.class, rightClaw);
