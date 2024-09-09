@@ -25,7 +25,7 @@ Colored buttons
     Y: backdrop up
     A: backdrop down
     B: forward drop
-    X: ground
+    X: groundNo
 D-Pad
     Up-
     Down-
